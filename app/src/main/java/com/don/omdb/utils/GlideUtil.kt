@@ -17,18 +17,18 @@ object GlideUtil {
     fun glideOverrideSize(context: Context, url: String, imageView: ImageView) {
 
         val requestOptions = RequestOptions()
-            .placeholder(R.mipmap.ic_launcher).override(200, 250)
-            .transform(CenterCrop(), RoundedCorners(8))
+                .placeholder(R.mipmap.ic_launcher).override(200, 250)
+                .transform(CenterCrop(), RoundedCorners(8))
 
         try {
             Glide.with(context)
-                .load(url)
-                .apply(requestOptions)
-                .into(imageView)
+                    .load(url)
+                    .apply(requestOptions)
+                    .into(imageView)
         } catch (e: Exception) {
             Glide.with(context)
-                .load(R.mipmap.ic_launcher)
-                .into(imageView)
+                    .load(R.mipmap.ic_launcher)
+                    .into(imageView)
         }
 
     }

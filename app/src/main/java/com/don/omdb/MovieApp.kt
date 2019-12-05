@@ -35,8 +35,8 @@ class MovieApp : Application() {
 
     private fun createAppComponent() {
         appComponent = DaggerOmdbComponent.builder()
-            .omdbModule(OmdbModule())
-            .build()
+                .omdbModule(OmdbModule())
+                .build()
     }
 
 

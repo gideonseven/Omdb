@@ -1,23 +1,12 @@
 package com.don.omdb.ui.main
 
-import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.data.remote.RemoteRepository
-import com.don.omdb.utils.JniHelper
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import com.google.gson.reflect.TypeToken
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
 
 /**
  * Created by gideon on 03,December,2019
@@ -25,6 +14,10 @@ import timber.log.Timber
  * Jakarta - Indonesia
  */
 class MainViewModel : ViewModel() {
+    lateinit var mMovieService: MovieService
+    lateinit var mProgress: LinearLayout
+    var mPage: Int = 0
+    var mKeyword = ""
 
 
     val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
@@ -34,8 +27,16 @@ class MainViewModel : ViewModel() {
         return omdbRepository.getError()
     }
 
-    fun getMovies(movieService: MovieService, page: Int, keyword: String, progress: LinearLayout): LiveData<List<MdlMovieList>> {
-        return omdbRepository.getMovies(movieService, page, keyword, progress)
+    fun getMovies(): LiveData<List<MdlMovieList>> {
+        return omdbRepository.getMovies(mMovieService, mPage, mKeyword, mProgress)
     }
+
+    fun setAttributes(movieService: MovieService, page: Int, keyword: String, view: LinearLayout) {
+        this.mMovieService = movieService
+        this.mPage = page
+        this.mKeyword = keyword
+        this.mProgress = view
+    }
+
 
 }

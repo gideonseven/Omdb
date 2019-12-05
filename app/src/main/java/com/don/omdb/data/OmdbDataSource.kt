@@ -3,8 +3,8 @@ package com.don.omdb.data
 import android.widget.LinearLayout
 import androidx.lifecycle.LiveData
 import com.don.omdb.api.MovieService
+import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.data.remote.MdlMovieList
-import com.don.omdb.data.remote.RemoteRepository
 
 
 /**
@@ -19,6 +19,8 @@ interface OmdbDataSource {
                   keyword: String,
                   progress: LinearLayout): LiveData<List<MdlMovieList>>
 
-    fun getError():LiveData<String>
+    fun getDetails(movieService: MovieService, imdbID: String?, progress: LinearLayout): LiveData<MdlDetail>
+
+    fun getError(): LiveData<String>
 
 }

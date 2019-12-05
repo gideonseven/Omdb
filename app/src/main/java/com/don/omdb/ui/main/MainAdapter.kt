@@ -22,7 +22,7 @@ import java.util.*
  * Jakarta - Indonesia
  */
 class MainAdapter(val activity: Activity) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listMovie = ArrayList<MdlMovieList>()
 
@@ -87,7 +87,7 @@ class MainAdapter(val activity: Activity) :
     override fun getItemCount() = listMovie.size
 
     class MovieViewHolder internal constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+            RecyclerView.ViewHolder(itemView) {
         private val imgPhoto: ImageView = itemView.findViewById(R.id.ivPoster)
         private val tvName: TextView = itemView.findViewById(R.id.tvTitle)
         private val tvYear: TextView = itemView.findViewById(R.id.tvYear)
@@ -102,7 +102,7 @@ class MainAdapter(val activity: Activity) :
 
                 ll.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra("IMDB_ID", movie.imdbID)
+                    intent.putExtra(DetailActivity.EXTRA_IMDB, movie.imdbID)
                     itemView.context.startActivity(intent)
                 }
             }
@@ -110,7 +110,7 @@ class MainAdapter(val activity: Activity) :
     }
 
     private class LoadHolder internal constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView)
+            RecyclerView.ViewHolder(itemView)
 
     fun setMoreDataAvailable(moreDataAvailable: Boolean) {
         isMoreDataAvailable = moreDataAvailable

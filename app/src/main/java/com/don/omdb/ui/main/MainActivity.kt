@@ -9,14 +9,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.don.omdb.MovieApp
 import com.don.omdb.R
 import com.don.omdb.api.MovieService
-import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.OnLoadMoreListener
@@ -53,8 +51,9 @@ class MainActivity : BaseActivity() {
 
     private fun setupVM() {
         (application as MovieApp).appComponent.inject(this)
-        mainViewModel =  ViewModelProviders.of(this).get(MainViewModel::class.java)
-        mainViewModel.getMovies(movieService,currentPage,myQuery,progressDialog).observe(this, getMovie)
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
+        mainViewModel.getMovies().observe(this, getMovie)
         mainViewModel.getErrors().observe(this, getError)
     }
 
@@ -76,7 +75,8 @@ class MainActivity : BaseActivity() {
                         mAdapter.setMoreDataAvailable(false)
                     } else {
                         progressDialog.visibility = View.VISIBLE
-                        mainViewModel.getMovies(movieService,currentPage,myQuery,progressDialog).observe(this@MainActivity, getMovie)
+                        mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
+                        mainViewModel.getMovies().observe(this@MainActivity, getMovie)
                     }
                 }
             }
@@ -99,12 +99,13 @@ class MainActivity : BaseActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 //reset list on adapter
                 resetState(query)
-                mainViewModel.getMovies(movieService,currentPage,myQuery,progressDialog).observe(this@MainActivity, getMovie)
+                mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
+                mainViewModel.getMovies().observe(this@MainActivity, getMovie)
                 //hide keyboard
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(
-                    Objects.requireNonNull<View>(currentFocus).windowToken,
-                    0
+                        Objects.requireNonNull<View>(currentFocus).windowToken,
+                        0
                 )
                 return true
             }

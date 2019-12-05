@@ -27,27 +27,27 @@ class OmdbModule {
         val logging = HttpLoggingInterceptor()
 
         logging.level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
 
         return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
+                .addInterceptor(logging)
+                .build()
     }
 
     @Provides
     internal fun gson(): Gson {
         return GsonBuilder()
-            .serializeNulls()
-            .create()
+                .serializeNulls()
+                .create()
     }
 
     @Provides
     internal fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(JniHelper.baseUrl())
-            .addConverterFactory(GsonConverterFactory.create(gson()))
-            .client(okHttpClient)
-            .build()
+                .baseUrl(JniHelper.baseUrl())
+                .addConverterFactory(GsonConverterFactory.create(gson()))
+                .client(okHttpClient)
+                .build()
     }
 
     @Provides

@@ -1,60 +1,38 @@
 package com.don.omdb.ui.detail
 
-import android.app.Application
-import android.view.View
 import android.widget.LinearLayout
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.don.omdb.api.MovieService
+import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlDetail
-import com.don.omdb.utils.JniHelper
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
+import com.don.omdb.data.remote.RemoteRepository
 
 /**
  * Created by gideon on 03,December,2019
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class DetailViewModel() : ViewModel() {
-    private val detailMovie = MutableLiveData<MdlDetail>()
-    private val errorResponse = MutableLiveData<String>()
+class DetailViewModel : ViewModel() {
 
-    val mDetailMovie: LiveData<MdlDetail> get() = detailMovie
-    val errors: LiveData<String> get() = errorResponse
+    val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
 
-    fun setDetail(movieService: MovieService, imdbID: String, progress: LinearLayout) {
-        movieService.getDetailMovie(JniHelper.apiKey(), imdbID)
-            .enqueue(object : Callback<JsonObject> {
-                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                            //Get response from JsonObject save itu into string
-                            val jsonBody = response.body()!!.asJsonObject.toString()
-                            Timber.d(jsonBody)
-                            //Parse JsonObject
-                            val jsonParser = JsonParser()
-                            val jo = jsonParser.parse(jsonBody) as JsonObject
+    lateinit var mMovieService: MovieService
+    lateinit var mProgress: LinearLayout
+    var imdbID: String? = null
 
-                            val detail = Gson().fromJson(jo, MdlDetail::class.java)
-                            detailMovie.postValue(detail)
-                        }
-                        progress.visibility = View.GONE
-                    }
-                }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Timber.e(t, "Failed to get movies!")
-                    errorResponse.postValue(t.message.toString())
-                    progress.visibility = View.GONE
-                }
-            })
+    fun getErrors(): LiveData<String> {
+        return omdbRepository.getError()
+    }
+
+    fun getDetail(): LiveData<MdlDetail> {
+        return omdbRepository.getDetails(mMovieService, imdbID, mProgress)
+    }
+
+    fun setAttributes(movieService: MovieService, imdbID: String?, view: LinearLayout) {
+        this.mMovieService = movieService
+        this.imdbID = imdbID
+        this.mProgress = view
     }
 }

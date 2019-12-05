@@ -17,6 +17,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity() {
+    companion object {
+        val EXTRA_IMDB = "extra_imdb"
+    }
 
     @Inject
     lateinit var movieService: MovieService
@@ -37,15 +40,15 @@ class DetailActivity : BaseActivity() {
         setToolbarClose("Detail Movie")
         progressDialog = findViewById(R.id.progress_dialog)
         progressDialog.visibility = View.VISIBLE
-        imdbID = intent.extras?.getString("IMDB_ID")
+        imdbID = intent.extras?.getString(EXTRA_IMDB)
     }
 
     private fun setupVM() {
         (application as MovieApp).appComponent.inject(this)
         val detailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
-        detailViewModel.mDetailMovie.observe(this, getDetail)
-        detailViewModel.errors.observe(this, getError)
-        detailViewModel.setDetail(movieService, imdbID!!, progressDialog)
+        detailViewModel.setAttributes(movieService, imdbID, progressDialog)
+        detailViewModel.getErrors().observe(this, getError)
+        detailViewModel.getDetail().observe(this, getDetail)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

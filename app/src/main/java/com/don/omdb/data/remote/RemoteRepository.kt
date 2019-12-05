@@ -72,9 +72,43 @@ class RemoteRepository {
                 })
     }
 
+    fun getDetails(callback: LoadDetailCallback, movieService: MovieService, imdbID: String?, progress: LinearLayout) {
+        movieService.getDetailMovie(JniHelper.apiKey(), imdbID)
+                .enqueue(object : Callback<JsonObject> {
+                    override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                        if (response.isSuccessful) {
+                            if (response.body() != null) {
+                                //Get response from JsonObject save itu into string
+                                val jsonBody = response.body()!!.asJsonObject.toString()
+                                Timber.d(jsonBody)
+                                //Parse JsonObject
+                                val jsonParser = JsonParser()
+                                val jo = jsonParser.parse(jsonBody) as JsonObject
+
+                                val detail = Gson().fromJson(jo, MdlDetail::class.java)
+                                callback.onDetailReceived(detail)
+                            }
+                            progress.visibility = View.GONE
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        Timber.e(t, "Failed to get movies!")
+//                        errorResponse.postValue()
+                        progress.visibility = View.GONE
+                        callback.onDataNotAvailable(t.message.toString())
+                    }
+                })
+    }
+
 
     interface LoadMoviesCallback {
         fun onAllMoviesReceived(courseResponses: List<MdlMovieList>)
+        fun onDataNotAvailable(response: String)
+    }
+
+    interface LoadDetailCallback {
+        fun onDetailReceived(mdlDetail: MdlDetail)
         fun onDataNotAvailable(response: String)
     }
 

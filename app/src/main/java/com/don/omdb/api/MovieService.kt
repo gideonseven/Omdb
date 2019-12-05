@@ -17,17 +17,17 @@ interface MovieService {
 
     @GET(".")
     fun getMoviesList(
-        @Query("apikey") apiKey: String,
-        @Query("s") keyword: String,
-        @Query("type") type: String,
-        @Query("page") page: Int
+            @Query("apikey") apiKey: String,
+            @Query("s") keyword: String,
+            @Query("type") type: String,
+            @Query("page") page: Int
     ): Call<JsonObject>
 
 
     @GET(".")
     fun getDetailMovie(
-        @Query("apikey") apiKey: String,
-        @Query("i") imdbID: String
+            @Query("apikey") apiKey: String,
+            @Query("i") imdbID: String?
     ): Call<JsonObject>
 }
 

@@ -4,6 +4,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.don.omdb.api.MovieService
+import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.data.remote.RemoteRepository
 
@@ -57,13 +58,27 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
         return movieResults
     }
 
-    override fun getError(): LiveData<String> {
-        return errorResponse
+    override fun getDetails(movieService: MovieService, imdbID: String?, progress: LinearLayout): LiveData<MdlDetail> {
+        val movieDetail = MutableLiveData<MdlDetail>()
+
+        remoteRepository.getDetails(object : RemoteRepository.LoadDetailCallback {
+            override fun onDetailReceived(mdlDetail: MdlDetail) {
+                movieDetail.postValue(mdlDetail)
+            }
+
+            override fun onDataNotAvailable(response: String) {
+                errorResponse.postValue(response)
+            }
+
+        }, movieService, imdbID, progress)
+
+        return movieDetail
     }
 
 
-
-
+    override fun getError(): LiveData<String> {
+        return errorResponse
+    }
 
 
 }

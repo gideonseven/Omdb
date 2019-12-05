@@ -61,10 +61,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     fun setToolbarTitle(
-        tvTitle: TextView,
-        tvSubTitle: TextView,
-        title: String,
-        subTitle: String
+            tvTitle: TextView,
+            tvSubTitle: TextView,
+            title: String,
+            subTitle: String
     ) {
         val toolbar = supportActionBar
         if (toolbar != null) {
@@ -79,18 +79,18 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun showErrorAlert(message: String) {
         val alertDialog = AlertDialog.Builder(this)
-            .setTitle(R.string.alert_title)
-            .setMessage(message)
-            .setPositiveButton(
-                R.string.alert_close,
-                DialogInterface.OnClickListener { dialog, which ->
-                    if (message.contains("404")) {
+                .setTitle(R.string.alert_title)
+                .setMessage(message)
+                .setPositiveButton(
+                        R.string.alert_close,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if (message.contains("404")) {
 //                        logout()
-                    } else {
-                        dialog.dismiss()
-                    }
-                })
-            .create()
+                            } else {
+                                dialog.dismiss()
+                            }
+                        })
+                .create()
         alertDialog.show()
 
         //set dialog button color
@@ -105,12 +105,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun showSnackBar(string: String) {
         Snackbar.make(findViewById(android.R.id.content), string, Snackbar.LENGTH_LONG)
-            .show()
+                .show()
     }
 
     fun showTopSnackBar(string: String) {
         val snackBar =
-            Snackbar.make(findViewById(android.R.id.content), string, Snackbar.LENGTH_LONG)
+                Snackbar.make(findViewById(android.R.id.content), string, Snackbar.LENGTH_LONG)
         val view = snackBar.view
         val params = view.layoutParams as FrameLayout.LayoutParams
         params.gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
