@@ -17,7 +17,7 @@ Consuming API from <a href ="http://www.omdbapi.com"> OMDB </a>
   <li> Displaying movie app based on OMDB using MVVM design pattern</li>
   <li> using jetpack pro LiveData, ViewModel, Retrofit, Dagger</li> 
   <li> Support Load More listener for paging</li>
-  <li> Using cpp to secure secret from apk that been reversed engineered</li> 
+  <li> Using cpp to secure secret key from apk that been reversed engineered</li> 
 </ul>
 <p>
 
