@@ -1,5 +1,5 @@
 # Movie Apps
-Consuming API from <a href ="http://www.omdbapi.com"> OMDB </a>
+Consuming API from <a href ="http://www.omdbapi.com" target="_blank"> OMDB </a>
 
 <h2> Images Preview </h2>
 
@@ -38,7 +38,7 @@ by using that, once device has connection for internet, data saved to local stor
 
 
 <h2>NOTES</h2>
-<p>If you would like to run this project using Android Studio please make sure to get your apiKey from <a href ="http://www.omdbapi.com"> OMDB </a> first. Once you get your <b>apikey</b> please edit this part :
+<p>If you would like to run this project using Android Studio please make sure to get your apiKey from <a href ="http://www.omdbapi.com" target="_blank"> OMDB </a> first. Once you get your <b>apikey</b> please edit this part :
         <ul>
         <li>go to this path <i><b>rootfolder / app / src / main / cpp / kotlin-jni.c</i></b></li>
         <li>change "insert_your_key_here" with your apiKey </li> 
