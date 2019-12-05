@@ -12,8 +12,14 @@ Consuming API from <a href ="http://www.omdbapi.com"> OMDB </a>
 
 
 <h2> About this App </h2>
-<p>Displaying movie app based on OMDB using MVVM design pattern, also using jetpack pro 
-LiveData, ViewModel, Retrofit, Dagger. Support Load More listener for paging.<p>
+<p>
+<ul>
+  <li> Displaying movie app based on OMDB using MVVM design pattern</li>
+  <li> using jetpack pro LiveData, ViewModel, Retrofit, Dagger</li> 
+  <li> Support Load More listener for paging</li>
+  <li> Using cpp to secure secret from apk that been reversed engineered</li> 
+</ul>
+<p>
 
 
 <h2> Reason </h2>
@@ -31,7 +37,20 @@ by using that, once device has connection for internet, data saved to local stor
 </ul>
 
 
+<h2>NOTES</h2>
+<p>If you would like to run this project using Android Studio please make sure to get your apiKey from <a href ="http://www.omdbapi.com"> OMDB </a> first. Once you get your <b>apikey</b> please edit this part :
+        <ul>
+        <li>go to this path <i><b>rootfolder / app / src / main / cpp / kotlin-jni.c</i></b></li>
+        <li>change "insert_your_key_here" with your apiKey </li> 
+        </ul>
 
+Example: apikey = 12312412312
+
+    return (*env)->NewStringUTF(env, "insert_your_key_here"):
+    
+change to
+
+    return (*env)->NewStringUTF(env, "12312412312"):
 
 
 
