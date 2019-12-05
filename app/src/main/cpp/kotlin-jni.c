@@ -11,7 +11,7 @@ Java_com_don_omdb_utils_JniHelper_baseUrl(JNIEnv *env) {
 
 JNIEXPORT jstring JNICALL
 Java_com_don_omdb_utils_JniHelper_apiKey(JNIEnv *env, jobject thiz) {
-    return (*env)->NewStringUTF(env, "3fe861be");
+    return (*env)->NewStringUTF(env, "insert_your_key_here");
 }
 //END OF API KEY
 
