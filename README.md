@@ -26,7 +26,7 @@ Consuming API from <a href ="http://www.omdbapi.com" target="_blank"> OMDB </a>
 <p>Reason why I'm using MVVM because its gonna be easier to implement the unit testing also 
 modularity in code easier to maintain.<p>
 
-<h2> Feel free to download the apk </h2>  <a href ="http://www.omdbapi.com">Link APK</a>
+<h2> Feel free to download the apk </h2>  <a href ="https://drive.google.com/open?id=14QIMbCh1im6jNusDjX6RAMknQQripbWg">Link APK</a>
 <p><p>
 <h2> Future Development Suggestion </h2>
 <ul>
