@@ -19,48 +19,4 @@
     </style>
 
 
-    <style name="textCustom" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/text_size_20</item>
-        <item name="android:textColor">@color/colorGrey</item>
-        <item name="android:lineSpacingExtra">@dimen/text_size_20</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/proxima_bold</item>
-    </style>
-
-    <style name="textTablayout" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:fontFamily">@font/proxima_light</item>
-    </style>
-
-    <style name="textLabelPromo" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/colorTextLabel</item>
-        <item name="android:fontFamily">@font/proxima_light</item>
-    </style>
-
-
-    <style name="Button.Blue" parent="android:Theme">
-        <item name="android:background">@drawable/rectangle_button_default</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="Button.Orange" parent="android:Theme">
-        <item name="android:background">@drawable/rectangle_button_orange</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="colorControlRippleBlue">
-        <item name="colorControlHighlight">@color/colorLightBlue</item>
-    </style>
-
 </resources>

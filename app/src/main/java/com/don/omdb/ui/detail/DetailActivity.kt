@@ -10,26 +10,28 @@ import com.don.omdb.MovieApp
 import com.don.omdb.R
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.remote.MdlDetail
+import com.don.omdb.databinding.ActivityDetailBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.GlideUtil
-import kotlinx.android.synthetic.main.activity_detail.*
 import timber.log.Timber
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity() {
     companion object {
-        val EXTRA_IMDB = "extra_imdb"
+        const val EXTRA_IMDB = "extra_imdb"
     }
 
     @Inject
     lateinit var movieService: MovieService
-    lateinit var progressDialog: LinearLayout
+    private lateinit var progressDialog: LinearLayout
+    private lateinit var binding: ActivityDetailBinding
 
     private var imdbID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupUI()
 
@@ -59,11 +61,11 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun setMovieDetail(mdlDetail: MdlDetail) {
-        GlideUtil.glideOverrideSize(this, mdlDetail.poster!!, imgPhoto)
-        tvMovieTitle.text = mdlDetail.title
-        tvRating.text = mdlDetail.imdbRating
-        tvDate.text = mdlDetail.year
-        tvOverView.text = mdlDetail.plot
+        GlideUtil.glideOverrideSize(this, mdlDetail.poster!!, binding.ivPoster)
+        binding.tvMovieTitle.text = mdlDetail.title
+        binding.tvRating.text = mdlDetail.imdbRating
+        binding.tvDate.text = mdlDetail.year
+        binding.tvOverView.text = mdlDetail.plot
     }
 
     private val getDetail = Observer<MdlDetail> { detail ->

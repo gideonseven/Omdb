@@ -16,9 +16,9 @@ import com.don.omdb.MovieApp
 import com.don.omdb.R
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.remote.MdlMovieList
+import com.don.omdb.databinding.ActivityMainBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.OnLoadMoreListener
-import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -30,13 +30,17 @@ class MainActivity : BaseActivity() {
     lateinit var progressDialog: LinearLayout
     lateinit var mainViewModel: MainViewModel
 
+    lateinit var binding: ActivityMainBinding
+
     private var totalPage: Int = 4
     private var currentPage = 1
     private var myQuery = "dragon"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //setup Ui
         setupUI()
@@ -69,7 +73,7 @@ class MainActivity : BaseActivity() {
         mAdapter = MainAdapter(this)
         mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
-                rvMovieList.post {
+                binding.rvMovieList.post {
                     currentPage++
                     if (currentPage > totalPage) {
                         mAdapter.setMoreDataAvailable(false)
@@ -81,7 +85,7 @@ class MainActivity : BaseActivity() {
                 }
             }
         })
-        rvMovieList.apply {
+        binding.rvMovieList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = mAdapter

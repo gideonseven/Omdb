@@ -2,6 +2,7 @@ package com.don.omdb
 
 import android.app.Application
 import android.content.Context
+import com.chimerapps.niddler.core.AndroidNiddler
 import com.don.omdb.di.DaggerOmdbComponent
 import com.don.omdb.di.OmdbComponent
 import com.don.omdb.di.OmdbModule
@@ -28,16 +29,24 @@ class MovieApp : Application() {
         // Logging
         Timber.plant(Timber.DebugTree())
 
+        val niddler =  AndroidNiddler.Builder()
+            .setPort(0) //Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
+            .setNiddlerInformation(AndroidNiddler.fromApplication(this)) //Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
+            .setMaxStackTraceSize(10)
+            .build()
+        niddler.attachToApplication(this)
+
+
         // Set up Dagger
-        createAppComponent()
-
+        initDaggerModule(niddler)
     }
 
-    private fun createAppComponent() {
-        appComponent = DaggerOmdbComponent.builder()
-                .omdbModule(OmdbModule())
-                .build()
+    private fun initDaggerModule(mNiddler: AndroidNiddler){
+        val omdbModule = OmdbModule()
+        omdbModule.androidNiddler = mNiddler
+        appComponent =
+            DaggerOmdbComponent
+                .builder()
+                .omdbModule(omdbModule).build()
     }
-
-
 }

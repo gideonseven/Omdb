@@ -1,39 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--TEXT SIZE-->
-    <dimen name="text_size_2sp">2sp</dimen>
-    <dimen name="text_size_3sp">3sp</dimen>
-    <dimen name="text_size_5sp">5sp</dimen>
-    <dimen name="text_size_10">10sp</dimen>
-    <dimen name="text_size_11">11sp</dimen>
-    <dimen name="text_size_12">12sp</dimen>
-    <dimen name="text_size_13">13sp</dimen>
     <dimen name="text_size_14">14sp</dimen>
-    <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
-    <dimen name="text_size_22">22sp</dimen>
-    <dimen name="text_size_24">24sp</dimen>
-    <dimen name="text_size_26">26sp</dimen>
-    <dimen name="text_size_28">28sp</dimen>
-    <dimen name="text_size_30">30sp</dimen>
-    <dimen name="text_size_36">36sp</dimen>
 
 
-    <dimen name="margin_size_3dp">3dp</dimen>
     <dimen name="margin_size_4dp">4dp</dimen>
-    <dimen name="margin_size_5dp">5dp</dimen>
-    <dimen name="margin_size_6dp">6dp</dimen>
     <dimen name="margin_size_8dp">8dp</dimen>
-    <dimen name="margin_size_15dp">15dp</dimen>
-    <dimen name="margin_size_16dp">16dp</dimen>
-    <dimen name="margin_size_20dp">20dp</dimen>
-    <dimen name="margin_size_21dp">21dp</dimen>
-    <dimen name="margin_size_24dp">24dp</dimen>
-    <dimen name="margin_size_30dp">30dp</dimen>
-    <dimen name="margin_size_36dp">36dp</dimen>
-    <dimen name="margin_size_48dp">48dp</dimen>
     <dimen name="margin_size_72dp">72dp</dimen>
     <dimen name="margin_size_100dp">100dp</dimen>
 

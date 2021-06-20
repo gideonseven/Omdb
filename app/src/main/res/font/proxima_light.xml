@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<font-family xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
     <font
-        android:font="@font/proxima_nova_alt_light"
-        android:fontStyle="normal"
-        tools:ignore="UnusedAttribute" />
+        app:font="@font/proxima_nova_alt_light"
+        app:fontStyle="normal" />
 </font-family>

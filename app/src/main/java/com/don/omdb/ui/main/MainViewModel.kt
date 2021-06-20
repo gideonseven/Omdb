@@ -14,13 +14,13 @@ import com.don.omdb.data.remote.RemoteRepository
  * Jakarta - Indonesia
  */
 class MainViewModel : ViewModel() {
-    lateinit var mMovieService: MovieService
-    lateinit var mProgress: LinearLayout
-    var mPage: Int = 0
-    var mKeyword = ""
+    private lateinit var mMovieService: MovieService
+    private lateinit var mProgress: LinearLayout
+    private var mPage: Int = 0
+    private var mKeyword = ""
 
 
-    val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
+    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
 
 
     fun getErrors(): LiveData<String> {

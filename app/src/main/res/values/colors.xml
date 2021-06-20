@@ -3,16 +3,6 @@
     <color name="colorPrimary">#0089EF</color>
     <color name="colorPrimaryDark">#1E70BB</color>
     <color name="colorAccent">#FF6024</color>
-    <color name="colorOrange">#FF6B1D</color>
-    <color name="colorGrey">#AFAFAF</color>
-    <color name="colorLightGrey">#F9F9F9</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBackgroundOne">#E4E8F6</color>
-    <color name="colorTextLabel">#BBBBBB</color>
-    <color name="colorLightBlue">#2D2196F3</color>
-    <color name="colorLightYellow">#FFFC81</color>
     <color name="colorDarkGrey">#727272</color>
-    <color name="colorBackground">#FEFBFE</color>
-    <color name="colorDarkBlue">#0095EC</color>
-    <color name="colorDarkGreen">#4FD99C</color>
 </resources>

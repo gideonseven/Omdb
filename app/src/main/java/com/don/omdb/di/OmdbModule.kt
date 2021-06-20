@@ -1,6 +1,7 @@
 package com.don.omdb.di
 
-import com.don.omdb.BuildConfig
+import com.chimerapps.niddler.core.AndroidNiddler
+import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.RemoteRepository
@@ -10,7 +11,6 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,16 +22,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class OmdbModule {
 
+    lateinit var androidNiddler: AndroidNiddler
+
     @Provides
-    internal fun provideLoggingCapableHttpClient(): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-
-        logging.level =
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-
+    internal fun providesOkHttpClient(): OkHttpClient{
         return OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build()
+            .addInterceptor(NiddlerOkHttpInterceptor(androidNiddler, "DEFAULT"))
+            .build()
     }
 
     @Provides
@@ -42,17 +39,17 @@ class OmdbModule {
     }
 
     @Provides
-    internal fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    internal fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(JniHelper.baseUrl())
                 .addConverterFactory(GsonConverterFactory.create(gson()))
-                .client(okHttpClient)
+                .client(providesOkHttpClient())
                 .build()
     }
 
     @Provides
-    internal fun provideMovieService(retrofit: Retrofit): MovieService {
-        return retrofit.create<MovieService>(MovieService::class.java)
+    internal fun provideMovieService(): MovieService {
+        return provideRetrofit().create(MovieService::class.java)
     }
 
     @Provides
@@ -60,6 +57,4 @@ class OmdbModule {
         val remoteRepository = RemoteRepository()
         return OmdbRepository.getInstance(remoteRepository)!!
     }
-
-
 }

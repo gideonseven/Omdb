@@ -1,5 +1,6 @@
 package com.don.omdb.ui.detail
 
+import android.annotation.SuppressLint
 import android.widget.LinearLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -13,12 +14,13 @@ import com.don.omdb.data.remote.RemoteRepository
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
+@SuppressLint("StaticFieldLeak")
 class DetailViewModel : ViewModel() {
 
-    val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
+    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
 
-    lateinit var mMovieService: MovieService
-    lateinit var mProgress: LinearLayout
+    private lateinit var mMovieService: MovieService
+    private lateinit var mProgress: LinearLayout
     var imdbID: String? = null
 
 

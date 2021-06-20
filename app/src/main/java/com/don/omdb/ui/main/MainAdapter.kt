@@ -21,7 +21,7 @@ import java.util.*
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class MainAdapter(val activity: Activity) :
+class MainAdapter(private val activity: Activity) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listMovie = ArrayList<MdlMovieList>()
@@ -29,10 +29,10 @@ class MainAdapter(val activity: Activity) :
     private val TYPE_PROGRESS = 0
     private val TYPE_LINEAR = 1
 
-    internal var isLoading = false
-    internal var isMoreDataAvailable = true
+    private var isLoading = false
+    private var isMoreDataAvailable = true
 
-    internal var loadMoreListener: OnLoadMoreListener? = null
+    private var loadMoreListener: OnLoadMoreListener? = null
 
     fun setData(items: List<MdlMovieList>) {
         if (listMovie.isNotEmpty()) {
@@ -109,7 +109,7 @@ class MainAdapter(val activity: Activity) :
         }
     }
 
-    private class LoadHolder internal constructor(itemView: View) :
+    private class LoadHolder(itemView: View) :
             RecyclerView.ViewHolder(itemView)
 
     fun setMoreDataAvailable(moreDataAvailable: Boolean) {
