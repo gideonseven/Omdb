@@ -3,7 +3,7 @@ Consuming API from <a href ="http://www.omdbapi.com" target="_blank"> OMDB </a>
 
 <h2> Images Preview </h2>
 
-<p float="left">
+<p>float="left">
 <img src="images/home.png" width=200/>
 <img src="images/search.png" width=200/>
 <img src="images/detail.png" width=200/>
