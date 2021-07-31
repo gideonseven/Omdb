@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">OmdbApp</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="example">Example</string>
     <string name="label_title">Title</string>
     <string name="label_rating">9/10</string>
@@ -9,6 +7,5 @@
     <string name="alert_close">Close</string>
     <string name="search">Search</string>
     <string name="date">2019</string>
-
-
+    <string name="item_number_x">Data ke ----> %s</string>
 </resources>

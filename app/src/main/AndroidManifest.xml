@@ -27,6 +27,11 @@
             android:name=".ui.detail.DetailActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".ui.diffUtil.DiffUtilActivity"
+            android:exported="true"
+            android:theme="@style/AppNoBar" />
+
     </application>
 
 </manifest>
