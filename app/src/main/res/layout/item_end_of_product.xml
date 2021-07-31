@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvEndProduct"
+    style="@style/TextContent.BS"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_48dp"
+    android:layout_marginBottom="@dimen/_8dp"
+    android:gravity="center"
+    android:text="@string/text_end_of_product_search" />
+

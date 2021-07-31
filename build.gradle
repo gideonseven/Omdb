@@ -54,4 +54,5 @@ ext {
     navigationVersion = '2.3.5'
     ktxVersion = '1.6.0'
     niddlerVersion = '1.5.5'
+    lottieVersion = '3.4.1'
 }

@@ -10,7 +10,7 @@
     app:cardCornerRadius="@dimen/margin_size_8dp"
     app:cardUseCompatPadding="true">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
