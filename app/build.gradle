@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.don.omdb"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -45,8 +45,8 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // Dependencies for Android Support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.cardview:cardview:$cardVersion"
     implementation "com.google.android.material:material:$materialVersion"
@@ -94,13 +94,11 @@ dependencies {
 
     // Tools
     implementation "com.jakewharton.timber:timber:$timberVersion"
-    implementation "com.facebook.stetho:stetho:$stetho"
-    implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
 
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-    debugImplementation 'com.chimerapps.niddler:niddler:1.5.5'
-    releaseImplementation 'com.chimerapps.niddler:niddler-noop:1.5.5'
+    debugImplementation "com.chimerapps.niddler:niddler:$niddlerVersion"
+    releaseImplementation "com.chimerapps.niddler:niddler-noop:$niddlerVersion"
 }
