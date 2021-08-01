@@ -19,10 +19,17 @@ class DiffViewModel : ViewModel() {
     private var dataSize = 50
     private var totalPage: Int = 0
     private var allList = arrayListOf<DiffModel>()
-    var lessList = MutableLiveData<List<DiffModel>>()
+    var lessList = MutableLiveData<List<DiffModel>>().apply {
+        value = arrayListOf()
+    }
 
     private val loadingItem = DiffModel(
         DiffUtilAdapter.LOADING_ITEM,
+        -11
+    )
+
+    private val endOfItem = DiffModel(
+        DiffUtilAdapter.END_OF_PRODUCT,
         -11
     )
 
@@ -63,7 +70,7 @@ class DiffViewModel : ViewModel() {
         //update value
         lessList.postValue(
             if (isLastPage) {
-                tempValue + allList.chunked(10)[currentPage - 1]
+                tempValue + allList.chunked(10)[currentPage - 1] + endOfItem
             } else {
                 tempValue + allList.chunked(10)[currentPage - 1] + loadingItem
             }
@@ -74,5 +81,9 @@ class DiffViewModel : ViewModel() {
         Timber.e("=== IS LAST PAGE $isLastPage")
         Timber.e("=== TOTAL DATA ADDED  ${allList.size}")
         Timber.e("=== Current DATA ADDED  ${lessList.value?.size}")
+    }
+
+    fun resetDataForAdapter(){
+        lessList.value = arrayListOf()
     }
 }

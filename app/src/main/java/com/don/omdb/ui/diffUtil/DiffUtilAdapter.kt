@@ -18,25 +18,45 @@ import com.don.omdb.utils.AutoUpdatableAdapter
  * https://www.cicil.co.id/
  * gideon@cicil.co.id
  */
-class DiffUtilAdapter constructor (val onClick: (DiffModel) -> Unit) : RecyclerView.Adapter<ViewHolder>(),
+class DiffUtilAdapter constructor(val onClick: (DiffModel) -> Unit) :
+    RecyclerView.Adapter<ViewHolder>(),
     AutoUpdatableAdapter {
 
     companion object {
         private const val PRODUCT_ITEM = 1
-         const val LOADING_ITEM = 0
+        const val LOADING_ITEM = 0
+        const val END_OF_PRODUCT = -2
     }
 
     //auto observe update list data non blocking main thread
-     val items: AsyncListDiffer<DiffModel> by lazy {
-         AsyncListDiffer(this, itemCallback<DiffModel> { old, new -> old.id == new.id })
-     }
-
+    val items: AsyncListDiffer<DiffModel> by lazy {
+        AsyncListDiffer(this, itemCallback<DiffModel> { old, new -> old.id == new.id })
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            LOADING_ITEM -> LoadingHolder(ItemLoadingLoadMoreBinding.inflate(inflater, parent, false))
-            else -> ItemViewHolder(ItemListDiffBinding.inflate(inflater, parent, false))
+            LOADING_ITEM -> LoadingHolder(
+                ItemLoadingLoadMoreBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
+            )
+            END_OF_PRODUCT -> EndProductHolder(
+                ItemEndOfProductBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
+            )
+            else -> ItemViewHolder(
+                ItemListDiffBinding.inflate(
+                    inflater,
+                    parent,
+                    false
+                )
+            )
         }
     }
 
@@ -51,6 +71,7 @@ class DiffUtilAdapter constructor (val onClick: (DiffModel) -> Unit) : RecyclerV
     override fun getItemViewType(position: Int): Int {
         return when (items.currentList[position].id) {
             LOADING_ITEM -> LOADING_ITEM
+            END_OF_PRODUCT -> END_OF_PRODUCT
             else -> PRODUCT_ITEM
         }
     }
@@ -63,7 +84,7 @@ class DiffUtilAdapter constructor (val onClick: (DiffModel) -> Unit) : RecyclerV
         fun bind(diff: DiffModel) {
             binding.tvTitle.text =
                 binding.tvTitle.context.getString(R.string.item_number_x, diff.position.toString())
-            itemView.setOnClickListener { onClick(diff)}
+            itemView.setOnClickListener { onClick(diff) }
         }
     }
 
