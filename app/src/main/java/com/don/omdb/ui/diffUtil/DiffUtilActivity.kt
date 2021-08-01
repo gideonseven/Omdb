@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.MovieApp
+import com.don.omdb.data.DiffModel
 import com.don.omdb.databinding.ActivityDiffUtilBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.bindingDelegates
+import com.don.omdb.utils.prettyPrinting
 import timber.log.Timber
 
 
@@ -18,9 +20,12 @@ import timber.log.Timber
  */
 class DiffUtilActivity: BaseActivity() {
 
-    lateinit var mAdapter: DiffUtilAdapter
 
     private val binding by bindingDelegates (ActivityDiffUtilBinding::inflate)
+
+    private val mAdapter: DiffUtilAdapter by lazy {
+        DiffUtilAdapter { item -> goToTimber(item) }
+    }
 
     lateinit var diffViewModel: DiffViewModel
     lateinit var mLinearLayoutManager: LinearLayoutManager
@@ -28,8 +33,6 @@ class DiffUtilActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        mAdapter = DiffUtilAdapter()
 
         setupVM()
 
@@ -72,5 +75,8 @@ class DiffUtilActivity: BaseActivity() {
         }
     }
 
+    private fun goToTimber(diffModel: DiffModel){
+        prettyPrinting(diffModel)
+    }
 
 }
