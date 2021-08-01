@@ -23,7 +23,7 @@ class DiffUtilAdapter constructor (val onClick: (DiffModel) -> Unit) : RecyclerV
 
     companion object {
         private const val PRODUCT_ITEM = 1
-        private const val LOADING_ITEM = 0
+         const val LOADING_ITEM = 0
     }
 
     //auto observe update list data non blocking main thread

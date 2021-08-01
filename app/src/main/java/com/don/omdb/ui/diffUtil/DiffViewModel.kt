@@ -34,18 +34,31 @@ class DiffViewModel : ViewModel() {
         Timber.e("=== IS LAST PAGE $isLastPage")
         Timber.e("=== TOTAL DATA ADDED  ${allList.size}")
 
+        //add value each called
         currentPage++
 
+        //check if last page
+        if (totalPage == currentPage) {
+            isLastPage = true
+        }
+
+        //set temp value
         val tempValue = arrayListOf<DiffModel>()
         lessList.value?.let {
             tempValue.addAll(it)
         }
 
-        lessList.postValue(tempValue + allList.chunked(10)[currentPage - 1])
-
-        if (totalPage == currentPage) {
-            isLastPage = true
-        }
+        //update value
+        lessList.postValue(
+            if (isLastPage) {
+                tempValue + allList.chunked(10)[currentPage - 1]
+            } else {
+                tempValue + allList.chunked(10)[currentPage - 1] + DiffModel(
+                    DiffUtilAdapter.LOADING_ITEM,
+                    -11
+                )
+            }
+        )
 
         Timber.e("=== CURRENT PAGE $currentPage")
         Timber.e("=== TOTAL PAGE $totalPage")
