@@ -38,7 +38,7 @@ class DiffUtilActivity: BaseActivity() {
          } )
 
         with(binding.rvList){
-            itemAnimator = null
+//            itemAnimator = null
             adapter = mAdapter
             mLinearLayoutManager = LinearLayoutManager(context)
             layoutManager = mLinearLayoutManager
