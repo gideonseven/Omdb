@@ -2,6 +2,7 @@ package com.don.omdb.ui.diffUtil
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.MovieApp
@@ -10,6 +11,8 @@ import com.don.omdb.databinding.ActivityDiffUtilBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.bindingDelegates
 import com.don.omdb.utils.prettyPrinting
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -18,10 +21,10 @@ import timber.log.Timber
  * https://www.cicil.co.id/
  * gideon@cicil.co.id
  */
-class DiffUtilActivity: BaseActivity() {
+class DiffUtilActivity : BaseActivity() {
 
 
-    private val binding by bindingDelegates (ActivityDiffUtilBinding::inflate)
+    private val binding by bindingDelegates(ActivityDiffUtilBinding::inflate)
 
     private val mAdapter: DiffUtilAdapter by lazy {
         DiffUtilAdapter { item -> goToTimber(item) }
@@ -36,11 +39,11 @@ class DiffUtilActivity: BaseActivity() {
 
         setupVM()
 
-         diffViewModel.lessList.observe(this, {
-             list -> mAdapter.updateList(list)
-         } )
+        diffViewModel.lessList.observe(this, { list ->
+            mAdapter.updateList(list)
+        })
 
-        with(binding.rvList){
+        with(binding.rvList) {
 //            itemAnimator = null
             adapter = mAdapter
             mLinearLayoutManager = LinearLayoutManager(context)
@@ -62,20 +65,27 @@ class DiffUtilActivity: BaseActivity() {
             Timber.e("=== TOTAL ITEM IN ADAPTER ${mAdapter.itemCount - 1}")
             Timber.e("=== LAST COMPLETE ITEM POSITION ${mLinearLayoutManager.findLastCompletelyVisibleItemPosition()}")
 
-            if(!diffViewModel.isLastPage){
+            if (!diffViewModel.isLastPage) {
                 if (mLinearLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.itemCount - 1) {
                     Timber.e("=== IM HERE")
-                 /*   mAdapter.updateList(arrayListOf<DiffModel>().apply {
-                        add(DiffModel(1000, 90909))
-                        add(DiffModel(1001, 90910))
-                    })*/
-                    diffViewModel.getDataForAdapter()
+                    /*   mAdapter.updateList(arrayListOf<DiffModel>().apply {
+                           add(DiffModel(1000, 90909))
+                           add(DiffModel(1001, 90910))
+                       })*/
+                    lifecycleScope.launch {
+                        delay(1000)
+                        diffViewModel.getDataForAdapter()
+                        diffViewModel.removeLoading()
+                   /*     diffViewModel.lessList.observe(this@DiffUtilActivity, {
+                            mAdapter.removeLoading()
+                        })*/
+                    }
                 }
             }
         }
     }
 
-    private fun goToTimber(diffModel: DiffModel){
+    private fun goToTimber(diffModel: DiffModel) {
         prettyPrinting(diffModel)
     }
 

@@ -70,5 +70,4 @@ class DiffUtilAdapter constructor (val onClick: (DiffModel) -> Unit) : RecyclerV
     fun updateList(updatedList: List<DiffModel>) {
         items.submitList(updatedList)
     }
-
 }
