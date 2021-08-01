@@ -74,8 +74,8 @@ class DiffUtilActivity : BaseActivity() {
                        })*/
                     lifecycleScope.launch {
                         delay(1000)
+
                         diffViewModel.getDataForAdapter()
-                        diffViewModel.removeLoading()
                    /*     diffViewModel.lessList.observe(this@DiffUtilActivity, {
                             mAdapter.removeLoading()
                         })*/

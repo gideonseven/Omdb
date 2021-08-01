@@ -21,7 +21,19 @@ class DiffViewModel : ViewModel() {
     private var allList = arrayListOf<DiffModel>()
     var lessList = MutableLiveData<List<DiffModel>>()
 
+    private val loadingItem = DiffModel(
+        DiffUtilAdapter.LOADING_ITEM,
+        -11
+    )
+
     fun getDataForAdapter() {
+
+        lessList.value?.let {
+            if(it.contains(loadingItem)){
+              lessList.value = it.minus(loadingItem)
+            }
+        }
+
         if (currentPage == 0) {
             for (i in 0 until dataSize) {
                 allList.add(i, DiffModel(id = i + dataSize, position = i))
@@ -53,10 +65,7 @@ class DiffViewModel : ViewModel() {
             if (isLastPage) {
                 tempValue + allList.chunked(10)[currentPage - 1]
             } else {
-                tempValue + allList.chunked(10)[currentPage - 1] + DiffModel(
-                    DiffUtilAdapter.LOADING_ITEM,
-                    -11
-                )
+                tempValue + allList.chunked(10)[currentPage - 1] + loadingItem
             }
         )
 
