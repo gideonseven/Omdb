@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.MovieApp
-import com.don.omdb.data.DiffModel
 import com.don.omdb.databinding.ActivityDiffUtilBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.bindingDelegates

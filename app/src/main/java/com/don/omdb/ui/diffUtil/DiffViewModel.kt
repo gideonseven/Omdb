@@ -1,11 +1,8 @@
 package com.don.omdb.ui.diffUtil
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.don.omdb.data.DiffModel
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 

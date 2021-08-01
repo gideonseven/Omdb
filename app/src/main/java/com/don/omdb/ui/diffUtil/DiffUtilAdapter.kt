@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
-import com.don.omdb.data.DiffModel
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.don.omdb.R
+import com.don.omdb.data.DiffModel
 import com.don.omdb.databinding.ItemEndOfProductBinding
 import com.don.omdb.databinding.ItemListDiffBinding
 import com.don.omdb.databinding.ItemLoadingLoadMoreBinding
