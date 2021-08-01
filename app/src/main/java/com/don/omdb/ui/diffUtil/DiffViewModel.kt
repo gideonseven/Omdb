@@ -1,5 +1,6 @@
 package com.don.omdb.ui.diffUtil
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,15 +20,13 @@ class DiffViewModel : ViewModel() {
     var isLastPage = false
 
     private var dataSize = 50
-    private var totalPage : Int = 0
+    private var totalPage: Int = 0
     private var allList = arrayListOf<DiffModel>()
-     var lessList = MutableLiveData<List<DiffModel>>().apply {
-         value = listOf()
-     }
+    var lessList = MutableLiveData<List<DiffModel>>()
 
-    fun getDataForAdapter(){
-        if(currentPage == 0){
-            for(i in 0 until dataSize){
+    fun getDataForAdapter() {
+        if (currentPage == 0) {
+            for (i in 0 until dataSize) {
                 allList.add(i, DiffModel(id = i + dataSize, position = i))
             }
             totalPage = allList.chunked(10).size
@@ -39,11 +38,15 @@ class DiffViewModel : ViewModel() {
         Timber.e("=== TOTAL DATA ADDED  ${allList.size}")
 
         currentPage++
-        lessList.value.let {
-            lessList.postValue(  allList.chunked(10)[currentPage - 1] )
 
+        val tempValue = arrayListOf<DiffModel>()
+        lessList.value?.let {
+            tempValue.addAll(it)
         }
-        if(totalPage == currentPage -1) {
+
+        lessList.postValue(tempValue + allList.chunked(10)[currentPage - 1])
+
+        if (totalPage == currentPage - 1) {
             isLastPage = true
         }
 

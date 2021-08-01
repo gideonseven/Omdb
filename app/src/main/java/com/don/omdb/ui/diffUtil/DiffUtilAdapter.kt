@@ -62,10 +62,6 @@ class DiffUtilAdapter: RecyclerView.Adapter<ItemViewHolder>(),
     }
 
     fun updateList(updatedList: List<DiffModel>) {
-        if (updatedList.isEmpty()) {
-            items.submitList(emptyList())
-            return
-        }
         items.submitList(updatedList)
     }
 

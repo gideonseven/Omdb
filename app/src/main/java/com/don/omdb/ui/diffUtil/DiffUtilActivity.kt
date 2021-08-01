@@ -34,9 +34,10 @@ class DiffUtilActivity: BaseActivity() {
 
         setupVM()
 
-        diffViewModel.lessList.observe(this, {
-            list -> mAdapter.updateList(list)
-        } )
+         diffViewModel.lessList.observe(this, {
+             list -> mAdapter.updateList(list)
+         } )
+
         with(binding.rvList){
             itemAnimator = null
             adapter = mAdapter
@@ -67,7 +68,6 @@ class DiffUtilActivity: BaseActivity() {
                         add(DiffModel(1001, 90910))
                     })*/
                     diffViewModel.getDataForAdapter()
-
                 }
             }
         }
