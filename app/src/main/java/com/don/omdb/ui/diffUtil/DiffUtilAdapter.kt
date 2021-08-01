@@ -12,7 +12,6 @@ import com.don.omdb.databinding.ItemListDiffBinding
 import com.don.omdb.databinding.ItemLoadingLoadMoreBinding
 import com.don.omdb.ui.diffUtil.DiffUtilAdapter.ItemViewHolder
 import com.don.omdb.utils.AutoUpdatableAdapter
-import timber.log.Timber
 
 
 /**
@@ -28,11 +27,6 @@ class DiffUtilAdapter: RecyclerView.Adapter<ItemViewHolder>(),
          AsyncListDiffer(this, itemCallback<DiffModel> { old, new -> old.id == new.id })
      }
 
-/*    var items: List<DiffModel> by Delegates.observable(emptyList()) { _, oldValue, newValue ->
-        autoNotify(oldValue, newValue) { old, new ->
-            old.id == new.id
-        }
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)

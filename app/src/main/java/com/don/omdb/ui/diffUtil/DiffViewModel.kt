@@ -46,7 +46,7 @@ class DiffViewModel : ViewModel() {
 
         lessList.postValue(tempValue + allList.chunked(10)[currentPage - 1])
 
-        if (totalPage == currentPage - 1) {
+        if (totalPage == currentPage) {
             isLastPage = true
         }
 
