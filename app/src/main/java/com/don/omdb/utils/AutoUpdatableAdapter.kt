@@ -6,6 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 /**
+ * Created by Gideon Steven Tobing on 01,August,2021.
+ * https://www.cicil.co.id/
+ * gideon@cicil.co.id
+ */
+/**
+ * Created by Franky Wijanarko on 2/26/2021.
+ * franky.wijanarko@cicil.co.id
+ *
  * source : https://github.com/antoniolg/diffutil-recyclerview-kotlin/blob/master/app/src/main/java/com/antonioleiva/diffutilkotlin/AutoUpdatableAdapter.kt
  */
 interface AutoUpdatableAdapter {

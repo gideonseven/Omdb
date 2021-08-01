@@ -6,4 +6,4 @@ package com.don.omdb.data
  * https://www.cicil.co.id/
  * gideon@cicil.co.id
  */
-data class Diff (var id: Int, var position: Int = -9)
+data class DiffModel (var id: Int, var position: Int = -9)

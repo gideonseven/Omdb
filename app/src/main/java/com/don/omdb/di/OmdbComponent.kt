@@ -1,6 +1,7 @@
 package com.don.omdb.di
 
 import com.don.omdb.ui.detail.DetailActivity
+import com.don.omdb.ui.diffUtil.DiffUtilActivity
 import com.don.omdb.ui.main.MainActivity
 import dagger.Component
 import javax.inject.Singleton
@@ -15,4 +16,5 @@ import javax.inject.Singleton
 interface OmdbComponent {
     fun inject(target: MainActivity)
     fun inject(target: DetailActivity)
+    fun inject(target: DiffUtilActivity)
 }
