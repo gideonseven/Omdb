@@ -33,6 +33,8 @@ class DiffViewModel : ViewModel() {
         -11
     )
 
+    //CHUNKED NYA JGN DI PRESENTER (untuk project kita)
+    //TARO DI DATA MANAGER
     fun getDataForAdapter() {
 
         lessList.value?.let {

@@ -52,6 +52,10 @@ class DiffUtilActivity : BaseActivity() {
             diffViewModel.getDataForAdapter()
             addOnScrollListener(mInfiniteScrollListener)
         }
+
+        binding.btnReset.setOnClickListener {
+            diffViewModel.resetDataForAdapter()
+        }
     }
 
     private fun setupVM() {
@@ -62,23 +66,16 @@ class DiffUtilActivity : BaseActivity() {
     private val mInfiniteScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            Timber.e("=== TOTAL ITEM IN ADAPTER ${mAdapter.itemCount - 1}")
-            Timber.e("=== LAST COMPLETE ITEM POSITION ${mLinearLayoutManager.findLastCompletelyVisibleItemPosition()}")
+
 
             if (!diffViewModel.isLastPage) {
                 if (mLinearLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.itemCount - 1) {
                     Timber.e("=== IM HERE")
-                    /*   mAdapter.updateList(arrayListOf<DiffModel>().apply {
-                           add(DiffModel(1000, 90909))
-                           add(DiffModel(1001, 90910))
-                       })*/
+                    Timber.e("=== TOTAL ITEM IN ADAPTER ${mAdapter.itemCount - 1}")
+                    Timber.e("=== LAST COMPLETE ITEM POSITION ${mLinearLayoutManager.findLastCompletelyVisibleItemPosition()}")
                     lifecycleScope.launch {
                         delay(1000)
-
                         diffViewModel.getDataForAdapter()
-                   /*     diffViewModel.lessList.observe(this@DiffUtilActivity, {
-                            mAdapter.removeLoading()
-                        })*/
                     }
                 }
             }
