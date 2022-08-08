@@ -15,6 +15,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="true"
             android:theme="@style/AppNoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
