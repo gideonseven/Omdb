@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_size_4dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="horizontal"
-    tools:ignore="UnusedAttribute">
-
-    <ImageView
-        android:id="@+id/ivPoster"
-        android:layout_width="@dimen/margin_size_72dp"
-        android:layout_height="@dimen/margin_size_100dp"
-        tools:ignore="ContentDescription" />
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/margin_size_4dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_size_4dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        tools:ignore="UnusedAttribute">
 
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="@dimen/margin_size_72dp"
+            android:layout_height="@dimen/margin_size_100dp"
+            tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/margin_size_8dp"
-            android:layout_marginEnd="@dimen/margin_size_8dp"
-            android:textColor="@android:color/background_dark"
-            android:textSize="@dimen/text_size_16"
-            tools:text="@string/example" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_size_4dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/margin_size_8dp"
-            android:layout_marginEnd="@dimen/margin_size_8dp"
-            android:maxLength="50"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/text_size_14"
-            tools:text="@string/example" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_size_8dp"
+                android:layout_marginEnd="@dimen/margin_size_8dp"
+                android:textColor="@android:color/background_dark"
+                android:textSize="@dimen/text_size_16"
+                tools:text="@string/example" />
+
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_size_8dp"
+                android:layout_marginEnd="@dimen/margin_size_8dp"
+                android:maxLength="50"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/text_size_14"
+                tools:text="@string/example" />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</layout>

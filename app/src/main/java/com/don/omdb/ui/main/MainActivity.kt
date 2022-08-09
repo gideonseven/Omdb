@@ -26,7 +26,8 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
     @Inject
     lateinit var movieService: MovieService
-    lateinit var mAdapter: MainAdapter
+//    lateinit var mAdapter: MainAdapter
+//    lateinit var mAdapter: MainAdapterNew
     lateinit var progressDialog: LinearLayout
     lateinit var mainViewModel: MainViewModel
 
@@ -36,6 +37,11 @@ class MainActivity : BaseActivity() {
     private var currentPage = 1
     private var myQuery = "dragon"
 
+    private val mAdapter: MainAdapterNew by lazy {
+        MainAdapterNew {
+            item ->
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,8 +76,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupAdapter() {
-        mAdapter = MainAdapter(this)
-        mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
+  /*      mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
                 binding.rvMovieList.post {
                     currentPage++
@@ -84,7 +89,7 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
-        })
+        })*/
         binding.rvMovieList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -125,13 +130,14 @@ class MainActivity : BaseActivity() {
     private fun resetState(query: String) {
         currentPage = 1
         myQuery = query
-        mAdapter.clearList()
+//        mAdapter.clearList()
     }
 
     private val getMovie = Observer<List<MdlMovieList>> { list ->
         if (list != null) {
             Timber.d(list.toString())
-            mAdapter.setData(list)
+//            mAdapter.setData(list)
+            mAdapter.submitList(list)
         }
     }
 
@@ -141,5 +147,4 @@ class MainActivity : BaseActivity() {
             showSnackBar(list)
         }
     }
-
 }
