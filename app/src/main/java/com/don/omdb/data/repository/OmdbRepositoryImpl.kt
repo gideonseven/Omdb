@@ -2,9 +2,7 @@ package com.don.omdb.data.repository
 
 import com.don.omdb.api.OmdbApi
 import com.don.omdb.repository.IOmdbRepository
-import com.don.omdb.utils.RequestType
-import com.don.omdb.utils.getResult
-import com.don.omdb.utils.succeedMapper
+import com.don.omdb.utils.*
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
 
@@ -21,12 +19,12 @@ class OmdbRepositoryImpl @Inject constructor(
 
     override fun getMovies(
         requestType: RequestType,
-        keyword: String,
-        type: String,
-        page: Int
+        page: Int,
+        perPage: Int,
+        orderBy: String
     ) = getResult(
         requestType,
-        call = { api.getMoviesList(keyword = keyword, type = type, page = page) },
+        call = { api.getMoviesList(page = page, per_page = perPage, order_by = orderBy) },
         converter = { it }
     ).succeedMapper {
         it?.second

@@ -1,6 +1,6 @@
 package com.don.omdb.ui.main
 
-import com.don.omdb.data.remote.MdlMovieList
+import com.don.omdb.data.remote.UnsplashItem
 import com.don.omdb.utils.*
 
 
@@ -12,14 +12,14 @@ import com.don.omdb.utils.*
 class MainContract {
 
     sealed class MainEffect : UiEffect {
-        object onDoSomethingHappened: MainEffect()
+        object DoSomethingHappened: MainEffect()
     }
 
     sealed class MainEvent : UiEvent {
-        object doSomethingForMe: MainEvent()
+        object DoSomethingForMe: MainEvent()
     }
 
     data class MainState(
-        val responseState: ResponseState<RequestType, MdlMovieList?> = ResponseState.Empty
+        val responseState: ResponseState<RequestType, List<UnsplashItem>?> = ResponseState.Empty
     ) : UiState
 }

@@ -6,12 +6,12 @@
 //package com.don.omdb.utils
 JNIEXPORT jstring JNICALL
 Java_com_don_omdb_utils_JniHelper_baseUrl(JNIEnv *env, __unused jobject thiz) {
-    return (*env)->NewStringUTF(env, "https://www.omdbapi.com/");
+    return (*env)->NewStringUTF(env, "https://api.unsplash.com/");
 }
 
 JNIEXPORT jstring JNICALL
 Java_com_don_omdb_utils_JniHelper_apiKey(JNIEnv *env, __unused jobject thiz) {
-    return (*env)->NewStringUTF(env, "3fe861be");
+    return (*env)->NewStringUTF(env, "1i2IouUHVPwUImfJnF-WSJ5JtBUFX3gJ7H89DhrjFAA");
 }
 //END OF API KEY
 

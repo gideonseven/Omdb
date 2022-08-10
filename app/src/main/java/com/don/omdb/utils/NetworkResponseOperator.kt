@@ -1,9 +1,14 @@
 package com.don.omdb.utils
 
+import com.don.omdb.data.remote.UnsplashItem
 import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.StatusCode
 import com.skydoves.sandwich.operators.ApiResponseSuspendOperator
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Response
 import timber.log.Timber
 
@@ -33,11 +38,19 @@ class NetworkResponseOperator<Result, RC> constructor(
             status = response.status
             message = response.message
             token = response.token
+            Timber.e("====  BASE NETWORK")
+
         } else if (response is String) {
-            val convertedObject = Gson().fromJson(response, SimpleNetworkModel::class.java)
-            status = convertedObject?.status
-            message = convertedObject?.message
-            token = convertedObject?.token
+          /*  Timber.e("====  STRING")
+            val moshi = Moshi.Builder()
+                .addLast(KotlinJsonAdapterFactory())
+                .build()
+            val adapter: JsonAdapter<SimpleNetworkModel> =
+                moshi.adapter(SimpleNetworkModel::class.java)
+            val model = adapter.fromJson(response)*/
+        } else {
+            Timber.e("====  else ")
+
         }
 
         when {

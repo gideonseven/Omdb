@@ -2,7 +2,6 @@ package com.don.omdb.usecase
 
 import com.don.omdb.repository.IOmdbRepository
 import com.don.omdb.utils.RequestType
-import com.don.omdb.utils.handleErrors
 import com.don.omdb.utils.succeedMapper
 import com.paulrybitskyi.hiltbinder.BindType
 import javax.inject.Inject
@@ -20,13 +19,12 @@ class OmdbUseCaseImpl @Inject constructor(
 
     override fun getMovies(
         requestType: RequestType,
-        keyword: String,
-        type: String,
-        page: Int
+        page: Int,
+        perPage: Int,
+        orderBy: String
     ) =
-        repository.getMovies(requestType, keyword, type, page).handleErrors(requestType)
+        repository.getMovies(requestType, page, perPage, orderBy)
             .succeedMapper {
                 it
             }
-
 }

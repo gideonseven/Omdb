@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.R
-import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.ui.detail.DetailActivity
 import com.don.omdb.utils.GlideUtil
 import com.don.omdb.utils.OnLoadMoreListener
@@ -20,6 +19,7 @@ import com.don.omdb.utils.OnLoadMoreListener
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
+/*
 class MainAdapter(private val activity: Activity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -118,4 +118,4 @@ class MainAdapter(private val activity: Activity) :
     fun setLoadMoreListener(loadMoreListener: OnLoadMoreListener) {
         this.loadMoreListener = loadMoreListener
     }
-}
+}*/

@@ -20,15 +20,20 @@ class MainViewModel @Inject constructor(
     var myQuery = "dragon"
 
     init {
-        MainContract.MainEvent.doSomethingForMe
+//        MainContract.MainEvent.DoSomethingForMe
+
+        getMovies()
     }
 
     override fun createInitialState(): MainContract.MainState = MainContract.MainState()
 
 
     override fun handleEvent(event: MainContract.MainEvent) {
-        when(event){
-            is MainContract.MainEvent.doSomethingForMe -> doSomething()
+        when (event) {
+            is MainContract.MainEvent.DoSomethingForMe -> {
+
+                getMovies()
+            }
         }
         /* when (event) {
              is StatisticEvent.GetStatistic -> getStatistic()
@@ -38,16 +43,17 @@ class MainViewModel @Inject constructor(
 
 //    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
 
-    fun getMovies() {
+    private fun getMovies() {
+        Timber.e("CALL GET MOVIES")
         launchRequest {
             setState {
                 copy(responseState = ResponseState.Loading(RequestType.GET_MOVIES))
             }
             omdbUseCase.getMovies(
                 RequestType.GET_MOVIES,
-                keyword = myQuery,
-                type = "movies",
-                page = currentPage
+                page = 1,
+                perPage = 2,
+                orderBy = "latest"
             )
                 .handleErrors(RequestType.GET_MOVIES)
                 .handleResult(
@@ -62,14 +68,8 @@ class MainViewModel @Inject constructor(
                     },
                     onNotAuthorized = {
                         Timber.e("==== ${it}")
-
                     }
                 )
         }
-    }
-
-    fun doSomething() {
-        Timber.e("== do something")
-        getMovies()
     }
 }

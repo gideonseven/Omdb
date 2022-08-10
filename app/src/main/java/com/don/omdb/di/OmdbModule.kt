@@ -4,20 +4,24 @@ import android.app.Application
 import com.chimerapps.niddler.core.AndroidNiddler
 import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
 import com.don.omdb.api.OmdbApi
+import com.don.omdb.utils.Api
 import com.don.omdb.utils.JniHelper
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.don.omdb.utils.OkHttpDefault
+import com.don.omdb.utils.OkHttpWithAuth
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
+//import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 /**
  * Created by gideon on 02,December,2019
  * dunprek@gmail.com
@@ -26,6 +30,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object OmdbModule {
+/*
 
     @Singleton
     @Provides
@@ -34,11 +39,18 @@ object OmdbModule {
             .serializeNulls()
             .create()
     }
+*/
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .addLast(KotlinJsonAdapterFactory())
+        .build()
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder().baseUrl(JniHelper.baseUrl())
-        .addConverterFactory(GsonConverterFactory.create())
+    fun provideRetrofit(moshi: Moshi): Retrofit = Retrofit.Builder().baseUrl(JniHelper.baseUrl())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
         .build()
 
@@ -56,22 +68,38 @@ object OmdbModule {
     }
 
     @Singleton
+    @OkHttpDefault
     @Provides
-    fun providesBasicOkHttpClient(
-        niddlerOkHttpInterceptor: NiddlerOkHttpInterceptor
-    ): OkHttpClient {
+    fun providesBasicOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
             .readTimeout(180, TimeUnit.SECONDS)
             .connectTimeout(180, TimeUnit.SECONDS)
             .writeTimeout(180, TimeUnit.SECONDS)
-            .addInterceptor(niddlerOkHttpInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
+    }
+
+    @Provides
+    @OkHttpWithAuth
+    @Singleton
+    fun providesOkHttpWithAuthHeader(
+        @OkHttpDefault okHttpClient: OkHttpClient
+    ): OkHttpClient {
+        return okHttpClient.newBuilder().addInterceptor { chain ->
+            var request = chain.request()
+            request = request.newBuilder()
+                .header(
+                    Api.AUTH_HEADER,
+                    "${Api.CLIENT_ID} ${JniHelper.apiKey()}"
+                ).build()
+            chain.proceed(request)
+        }.build()
     }
 
     @Singleton
     @Provides
-    fun providesOmdbApi(retrofit: Retrofit, okHttpClient: OkHttpClient): OmdbApi {
+    fun providesOmdbApi(retrofit: Retrofit, @OkHttpWithAuth okHttpClient: OkHttpClient): OmdbApi {
         return  retrofit.newBuilder().client(okHttpClient).build()
             .create(OmdbApi::class.java)
     }
