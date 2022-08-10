@@ -1,42 +1,75 @@
 package com.don.omdb.ui.main
 
-import android.widget.LinearLayout
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.don.omdb.api.MovieService
-import com.don.omdb.data.OmdbRepository
-import com.don.omdb.data.remote.MdlMovieList
-import com.don.omdb.data.remote.RemoteRepository
+import com.don.omdb.usecase.IOmdbUseCase
+import com.don.omdb.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by gideon on 03,December,2019
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class MainViewModel : ViewModel() {
-    private lateinit var mMovieService: MovieService
-    private lateinit var mProgress: LinearLayout
-    private var mPage: Int = 0
-    private var mKeyword = ""
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val omdbUseCase: IOmdbUseCase
+) : AppViewModel<MainContract.MainEvent, MainContract.MainState, MainContract.MainEffect>() {
+    var totalPage: Int = 4
+    var currentPage = 1
+    var myQuery = "dragon"
 
-
-    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
-
-
-    fun getErrors(): LiveData<String> {
-        return omdbRepository.getError()
+    init {
+        MainContract.MainEvent.doSomethingForMe
     }
 
-    fun getMovies(): LiveData<List<MdlMovieList>> {
-        return omdbRepository.getMovies(mMovieService, mPage, mKeyword, mProgress)
+    override fun createInitialState(): MainContract.MainState = MainContract.MainState()
+
+
+    override fun handleEvent(event: MainContract.MainEvent) {
+        when(event){
+            is MainContract.MainEvent.doSomethingForMe -> doSomething()
+        }
+        /* when (event) {
+             is StatisticEvent.GetStatistic -> getStatistic()
+             is StatisticEvent.ClickSeeMore -> setEffect { StatisticEffect.SeeMore(event.url) }
+         }*/
     }
 
-    fun setAttributes(movieService: MovieService, page: Int, keyword: String, view: LinearLayout) {
-        this.mMovieService = movieService
-        this.mPage = page
-        this.mKeyword = keyword
-        this.mProgress = view
+//    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
+
+    fun getMovies() {
+        launchRequest {
+            setState {
+                copy(responseState = ResponseState.Loading(RequestType.GET_MOVIES))
+            }
+            omdbUseCase.getMovies(
+                RequestType.GET_MOVIES,
+                keyword = myQuery,
+                type = "movies",
+                page = currentPage
+            )
+                .handleErrors(RequestType.GET_MOVIES)
+                .handleResult(
+                    updateState = { responseState ->
+                        Timber.e("==== ${responseState}")
+                    },
+                    onSuccess = { _, result ->
+                        Timber.e("==== ${result}")
+                    },
+                    onFailed = { _, model ->
+                        Timber.e("==== ${model.message}")
+                    },
+                    onNotAuthorized = {
+                        Timber.e("==== ${it}")
+
+                    }
+                )
+        }
     }
 
-
+    fun doSomething() {
+        Timber.e("== do something")
+        getMovies()
+    }
 }

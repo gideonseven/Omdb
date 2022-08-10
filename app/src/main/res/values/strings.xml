@@ -9,4 +9,6 @@
     <string name="date">2019</string>
     <string name="item_number_x">Data ke ----> %s</string>
     <string name="text_end_of_product_search">Akhir dari produk</string>
+    <string name="text_try_again">Coba Lagi</string>
+    <string name="text_error">Error</string>
 </resources>

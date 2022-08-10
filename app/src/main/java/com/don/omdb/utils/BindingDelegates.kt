@@ -23,7 +23,7 @@ fun <T> Fragment.bindingDelegates(initialise: () -> T): ReadOnlyProperty<Fragmen
             // Observe the View Lifecycle of the Fragment
             this@bindingDelegates
                 .viewLifecycleOwnerLiveData
-                .observe(this@bindingDelegates, { newLifecycleOwner ->
+                .observe(this@bindingDelegates) { newLifecycleOwner ->
                     viewLifecycleOwner
                         ?.lifecycle
                         ?.removeObserver(this)
@@ -31,7 +31,7 @@ fun <T> Fragment.bindingDelegates(initialise: () -> T): ReadOnlyProperty<Fragmen
                     viewLifecycleOwner = newLifecycleOwner.also {
                         it.lifecycle.addObserver(this)
                     }
-                })
+                }
         }
 
         override fun onDestroy(owner: LifecycleOwner) {

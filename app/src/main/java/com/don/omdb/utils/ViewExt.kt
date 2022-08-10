@@ -1,0 +1,37 @@
+package com.don.omdb.utils
+
+import android.view.View
+
+
+/**
+ * Created by gideon on 8/11/2022
+ * gideon@cicil.co.id
+ * https://www.cicil.co.id/
+ */
+fun View.show(): View {
+    if (visibility != View.VISIBLE) {
+        visibility = View.VISIBLE
+    }
+    return this
+}
+
+fun View.hide(): View {
+    if (visibility != View.GONE) {
+        visibility = View.GONE
+    }
+    return this
+}
+
+fun View.invisible() {
+    if (visibility != View.INVISIBLE) {
+        visibility = View.INVISIBLE
+    }
+}
+
+fun View.disabled() {
+    this.isEnabled = false
+}
+
+fun View.enabled() {
+    this.isEnabled = true
+}

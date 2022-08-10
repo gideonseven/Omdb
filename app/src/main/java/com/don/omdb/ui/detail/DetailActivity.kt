@@ -6,23 +6,24 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.don.omdb.MovieApp
 import com.don.omdb.R
-import com.don.omdb.api.MovieService
+//import com.don.omdb.api.OmdbApi
 import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.databinding.ActivityDetailBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.GlideUtil
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailActivity : BaseActivity() {
     companion object {
         const val EXTRA_IMDB = "extra_imdb"
     }
 
-    @Inject
-    lateinit var movieService: MovieService
+//    @Inject
+//    lateinit var omdbApi: OmdbApi
     private lateinit var progressDialog: LinearLayout
     private lateinit var binding: ActivityDetailBinding
 
@@ -46,11 +47,10 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun setupVM() {
-        (application as MovieApp).appComponent.inject(this)
         val detailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
-        detailViewModel.setAttributes(movieService, imdbID, progressDialog)
-        detailViewModel.getErrors().observe(this, getError)
-        detailViewModel.getDetail().observe(this, getDetail)
+//        detailViewModel.setAttributes(omdbApi, imdbID, progressDialog)
+//        detailViewModel.getErrors().observe(this, getError)
+//        detailViewModel.getDetail().observe(this, getDetail)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

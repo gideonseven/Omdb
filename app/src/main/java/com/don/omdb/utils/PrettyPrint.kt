@@ -11,11 +11,11 @@ import timber.log.Timber
  * https://www.cicil.co.id/
  * gideon@cicil.co.id
  */
-fun prettyPrinting(@NotNull any: Any){
+fun prettyPrinting(@NotNull any: Any) {
     Timber.e("=== Pretty Printing ${GsonBuilder().setPrettyPrinting().create().toJson(any)}")
 }
 
-fun Bundle.logValue(){
+fun Bundle.logValue() {
     for (key in this.keySet()) {
         Timber.e("KEY ==> $key  : VALUE ==>  ${this.get(key)}")
     }

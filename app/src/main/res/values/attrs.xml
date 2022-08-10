@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseRoundedCornerProgressBar">
+        <attr format="boolean" name="rcReverse"/>
+        <attr format="boolean" name="rcSecondaryReverse"/>
+        <attr format="float" name="rcProgress"/>
+        <attr format="float" name="rcMax"/>
+        <attr format="float" name="rcSecondaryMax"/>
+        <attr format="float" name="rcSecondaryProgress"/>
+        <attr format="dimension" name="rcBackgroundPadding"/>
+        <attr format="dimension" name="rcRadius"/>
+        <attr format="color" name="rcProgressColor"/>
+        <attr format="reference" name="rcProgressColors"/>
+        <attr format="color" name="rcSecondaryProgressColor"/>
+        <attr format="reference" name="rcSecondaryProgressColors"/>
+        <attr format="color" name="rcBackgroundColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="AnimatedRoundedCornerProgressBar">
+        <attr format="boolean" name="rcAnimationEnable"/>
+        <attr format="float" name="rcAnimationSpeedScale"/>
+    </declare-styleable>
+
+    <declare-styleable name="MultiStateView">
+        <attr name="loadingView" format="reference" />
+        <attr name="emptyView" format="reference" />
+        <attr name="errorView" format="reference" />
+        <attr name="animateViewChanges" format="boolean" />
+    </declare-styleable>
+</resources>

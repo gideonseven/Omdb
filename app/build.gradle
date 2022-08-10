@@ -1,19 +1,26 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.don.omdb"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
     }
     buildTypes {
         release {
@@ -46,62 +53,79 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlinVersion"
     // Dependencies for Android Support
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.cardview:cardview:$cardVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "androidx.annotation:annotation:$androidXAnnotations"
-    implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.cardview:cardview:$rootProject.cardVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.annotation:annotation:$rootProject.androidXAnnotations"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.androidXLegacySupport"
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version")
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycle_version")
     // Lifecycles only (without ViewModel or LiveData)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycle_version")
 
     // Saved state module for ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$rootProject.lifecycle_version")
 
     // Annotation processor
     // kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version")
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-
-    // Dagger
-    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-
     // Dependencies for Glide
-    implementation("com.github.bumptech.glide:glide:$glideVersion") {
+    implementation("com.github.bumptech.glide:glide:$rootProject.glideVersion") {
         exclude group: "androidx"
     }
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     // Dependencies for Idle Resource
-    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$rootProject.idleResourceVersion"
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$gsonVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$loggingVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.loggingVersion"
 
     // Tools
-    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    implementation "com.facebook.stetho:stetho:$rootProject.stetho"
+    implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.stetho"
 
-    implementation "androidx.core:core-ktx:$ktxVersion"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    kapt 'com.google.dagger:hilt-compiler:2.43.2'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.43.2'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.43.2'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.43.2'
+    kaptTest 'com.google.dagger:hilt-compiler:2.43.2'
+
+    implementation("com.paulrybitskyi:hilt-binder:$rootProject.hiltBinderVersion")
+    kapt("com.paulrybitskyi:hilt-binder-compiler:$rootProject.hiltBinderVersion")
+
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
+    implementation "com.github.skydoves:sandwich:1.2.7"
+    implementation "com.github.skydoves:bindables:1.1.0"
 
-    debugImplementation "com.chimerapps.niddler:niddler:$niddlerVersion"
-    releaseImplementation "com.chimerapps.niddler:niddler-noop:$niddlerVersion"
+    implementation 'com.chimerapps.niddler:niddler:1.5.5'
+
+}
+
+kapt {
+    correctErrorTypes true
 }

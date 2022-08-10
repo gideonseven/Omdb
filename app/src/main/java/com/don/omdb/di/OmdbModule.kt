@@ -1,18 +1,22 @@
 package com.don.omdb.di
 
+import android.app.Application
 import com.chimerapps.niddler.core.AndroidNiddler
 import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
-import com.don.omdb.api.MovieService
-import com.don.omdb.data.OmdbRepository
-import com.don.omdb.data.remote.RemoteRepository
+import com.don.omdb.api.OmdbApi
 import com.don.omdb.utils.JniHelper
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 /**
  * Created by gideon on 02,December,2019
@@ -20,41 +24,55 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Jakarta - Indonesia
  */
 @Module
-class OmdbModule {
+@InstallIn(SingletonComponent::class)
+object OmdbModule {
 
-    lateinit var androidNiddler: AndroidNiddler
-
-    @Provides
-    internal fun providesOkHttpClient(): OkHttpClient{
-        return OkHttpClient.Builder()
-            .addInterceptor(NiddlerOkHttpInterceptor(androidNiddler, "DEFAULT"))
-            .build()
-    }
-
+    @Singleton
     @Provides
     internal fun gson(): Gson {
         return GsonBuilder()
-                .serializeNulls()
-                .create()
+            .serializeNulls()
+            .create()
     }
 
+    @Singleton
     @Provides
-    internal fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(JniHelper.baseUrl())
-                .addConverterFactory(GsonConverterFactory.create(gson()))
-                .client(providesOkHttpClient())
-                .build()
+    fun provideRetrofit(): Retrofit = Retrofit.Builder().baseUrl(JniHelper.baseUrl())
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideNiddler(application: Application): NiddlerOkHttpInterceptor {
+        val niddler = AndroidNiddler.Builder()
+            // Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
+            .setPort(0)
+            // Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
+            .setNiddlerInformation(AndroidNiddler.fromApplication(application))
+            .setMaxStackTraceSize(10)
+            .build()
+        return NiddlerOkHttpInterceptor(niddler, "OMDB")
     }
 
+    @Singleton
     @Provides
-    internal fun provideMovieService(): MovieService {
-        return provideRetrofit().create(MovieService::class.java)
+    fun providesBasicOkHttpClient(
+        niddlerOkHttpInterceptor: NiddlerOkHttpInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .retryOnConnectionFailure(true)
+            .readTimeout(180, TimeUnit.SECONDS)
+            .connectTimeout(180, TimeUnit.SECONDS)
+            .writeTimeout(180, TimeUnit.SECONDS)
+            .addInterceptor(niddlerOkHttpInterceptor)
+            .build()
     }
 
+    @Singleton
     @Provides
-    fun provideRepository(): OmdbRepository {
-        val remoteRepository = RemoteRepository()
-        return OmdbRepository.getInstance(remoteRepository)!!
+    fun providesOmdbApi(retrofit: Retrofit, okHttpClient: OkHttpClient): OmdbApi {
+        return  retrofit.newBuilder().client(okHttpClient).build()
+            .create(OmdbApi::class.java)
     }
 }

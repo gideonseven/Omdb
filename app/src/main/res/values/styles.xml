@@ -155,4 +155,23 @@
         <item name="fontFamily">@font/proxima_bold</item>
     </style>
 
+
+    <style name="Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textAppearance">@style/TextContent.BM.Bold</item>
+        <item name="android:minWidth">@dimen/_200dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/_44dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="cornerRadius">@dimen/_8dp</item>
+
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">@dimen/_18sp</item>
+        <item name="iconTint">@color/colorWhite</item>
+        <item name="iconPadding">@dimen/_8dp</item>
+
+        <item name="android:insetLeft">@dimen/_0dp</item>
+        <item name="android:insetRight">@dimen/_0dp</item>
+        <item name="android:insetTop">@dimen/_0dp</item>
+        <item name="android:insetBottom">@dimen/_0dp</item>
+    </style>
 </resources>

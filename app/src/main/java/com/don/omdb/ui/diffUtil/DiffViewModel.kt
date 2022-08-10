@@ -38,8 +38,8 @@ class DiffViewModel : ViewModel() {
     fun getDataForAdapter() {
 
         lessList.value?.let {
-            if(it.contains(loadingItem)){
-              lessList.value = it.minus(loadingItem)
+            if (it.contains(loadingItem)) {
+                lessList.value = it.minus(loadingItem)
             }
         }
 
@@ -85,7 +85,7 @@ class DiffViewModel : ViewModel() {
         Timber.e("=== Current DATA ADDED  ${lessList.value?.size}")
     }
 
-    fun resetDataForAdapter(){
+    fun resetDataForAdapter() {
         lessList.value = arrayListOf()
     }
 }
