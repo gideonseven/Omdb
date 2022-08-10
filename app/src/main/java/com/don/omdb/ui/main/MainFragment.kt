@@ -56,28 +56,27 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
                 getUiStateFlow(),
                 onLoading = {
                     updateUIStateFlow(State.LOADING)
-                    Timber.e("== onLoading")
+                    Timber.e("== onLoading FRAGMENT")
                 },
                 onSuccess = { _, data ->
                     data?.let {
-                        Timber.e("== onSuccess")
-
+                        Timber.e("== onSuccess FRAGMENT")
                     }
                 },
                 onFailed = {_, model ->
-                    Timber.e("== onFailed")
+                    Timber.e("== onFailed FRAGMENT")
                 }
             )
         }
     }
 
     private suspend fun handleEffect() {
-        viewModel.effect.collect{
+        /*viewModel.effect.collect{
             when(it){
                 is MainContract.MainEffect.DoSomethingHappened ->{
                     Timber.e("== SOMETHING HAPPENED")
                 }
             }
-        }
+        }*/
     }
 }

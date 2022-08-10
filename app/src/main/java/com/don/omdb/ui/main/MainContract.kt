@@ -12,7 +12,7 @@ import com.don.omdb.utils.*
 class MainContract {
 
     sealed class MainEffect : UiEffect {
-        object DoSomethingHappened: MainEffect()
+//        object DoSomethingHappened: MainEffect()
     }
 
     sealed class MainEvent : UiEvent {

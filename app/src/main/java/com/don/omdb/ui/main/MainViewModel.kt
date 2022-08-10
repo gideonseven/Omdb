@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor(
     var myQuery = "dragon"
 
     init {
-//        MainContract.MainEvent.DoSomethingForMe
+        MainContract.MainEvent.DoSomethingForMe
 
-        getMovies()
+//        getMovies()
     }
 
     override fun createInitialState(): MainContract.MainState = MainContract.MainState()
@@ -31,7 +31,6 @@ class MainViewModel @Inject constructor(
     override fun handleEvent(event: MainContract.MainEvent) {
         when (event) {
             is MainContract.MainEvent.DoSomethingForMe -> {
-
                 getMovies()
             }
         }
@@ -58,15 +57,22 @@ class MainViewModel @Inject constructor(
                 .handleErrors(RequestType.GET_MOVIES)
                 .handleResult(
                     updateState = { responseState ->
+                        Timber.e("== updateState VM")
+
                         Timber.e("==== ${responseState}")
                     },
                     onSuccess = { _, result ->
+                        Timber.e("== onSuccess VM")
+
                         Timber.e("==== ${result}")
                     },
                     onFailed = { _, model ->
+                        Timber.e("== onFailed VM")
+
                         Timber.e("==== ${model.message}")
                     },
                     onNotAuthorized = {
+                        Timber.e("== onNotAuthorized VM")
                         Timber.e("==== ${it}")
                     }
                 )
