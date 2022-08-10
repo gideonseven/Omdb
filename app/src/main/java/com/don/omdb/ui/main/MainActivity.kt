@@ -26,8 +26,6 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
     @Inject
     lateinit var movieService: MovieService
-//    lateinit var mAdapter: MainAdapter
-//    lateinit var mAdapter: MainAdapterNew
     lateinit var progressDialog: LinearLayout
     lateinit var mainViewModel: MainViewModel
 
@@ -37,11 +35,11 @@ class MainActivity : BaseActivity() {
     private var currentPage = 1
     private var myQuery = "dragon"
 
-    private val mAdapter: MainAdapterNew by lazy {
-        MainAdapterNew {
-            item ->
+    private val mAdapter: MainAdapter by lazy {
+        MainAdapter { item ->
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,7 +74,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupAdapter() {
-  /*      mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
+        mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
                 binding.rvMovieList.post {
                     currentPage++
@@ -84,12 +82,17 @@ class MainActivity : BaseActivity() {
                         mAdapter.setMoreDataAvailable(false)
                     } else {
                         progressDialog.visibility = View.VISIBLE
-                        mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
+                        mainViewModel.setAttributes(
+                            movieService,
+                            currentPage,
+                            myQuery,
+                            progressDialog
+                        )
                         mainViewModel.getMovies().observe(this@MainActivity, getMovie)
                     }
                 }
             }
-        })*/
+        })
         binding.rvMovieList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -113,8 +116,8 @@ class MainActivity : BaseActivity() {
                 //hide keyboard
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(
-                        Objects.requireNonNull<View>(currentFocus).windowToken,
-                        0
+                    Objects.requireNonNull<View>(currentFocus).windowToken,
+                    0
                 )
                 return true
             }
@@ -130,14 +133,13 @@ class MainActivity : BaseActivity() {
     private fun resetState(query: String) {
         currentPage = 1
         myQuery = query
-//        mAdapter.clearList()
+        mAdapter.clearList()
     }
 
     private val getMovie = Observer<List<MdlMovieList>> { list ->
         if (list != null) {
             Timber.d(list.toString())
-//            mAdapter.setData(list)
-            mAdapter.submitList(list)
+            mAdapter.setData(list)
         }
     }
 
@@ -147,4 +149,5 @@ class MainActivity : BaseActivity() {
             showSnackBar(list)
         }
     }
+
 }

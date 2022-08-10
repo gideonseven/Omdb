@@ -46,6 +46,7 @@ class MainAdapterNew constructor(val onClick: (MdlMovieList) -> Unit) :
                 onClick(differ.currentList[bindingAdapterPosition])
             }
         }
+
         fun bind(movie: MdlMovieList) {
             binding.apply {
                 tvTitle.text = movie.Title

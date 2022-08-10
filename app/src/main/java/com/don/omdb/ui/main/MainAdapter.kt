@@ -1,6 +1,5 @@
 package com.don.omdb.ui.main
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +13,14 @@ import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.ui.detail.DetailActivity
 import com.don.omdb.utils.GlideUtil
 import com.don.omdb.utils.OnLoadMoreListener
-import java.util.*
 
 /**
  * Created by gideon on 03,December,2019
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class MainAdapter(private val activity: Activity) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainAdapter constructor(val onClick: (MdlMovieList) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listMovie = ArrayList<MdlMovieList>()
 
@@ -56,7 +54,7 @@ class MainAdapter(private val activity: Activity) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(activity)
+        val inflater = LayoutInflater.from(parent.context)
         return if (viewType == TYPE_LINEAR) {
             MovieViewHolder(inflater.inflate(R.layout.item_list_movie, parent, false))
         } else {
@@ -87,7 +85,7 @@ class MainAdapter(private val activity: Activity) :
     override fun getItemCount() = listMovie.size
 
     class MovieViewHolder internal constructor(itemView: View) :
-            RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView) {
         private val imgPhoto: ImageView = itemView.findViewById(R.id.ivPoster)
         private val tvName: TextView = itemView.findViewById(R.id.tvTitle)
         private val tvYear: TextView = itemView.findViewById(R.id.tvYear)
@@ -110,7 +108,7 @@ class MainAdapter(private val activity: Activity) :
     }
 
     private class LoadHolder(itemView: View) :
-            RecyclerView.ViewHolder(itemView)
+        RecyclerView.ViewHolder(itemView)
 
     fun setMoreDataAvailable(moreDataAvailable: Boolean) {
         isMoreDataAvailable = moreDataAvailable

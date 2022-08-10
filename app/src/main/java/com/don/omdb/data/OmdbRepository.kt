@@ -35,30 +35,38 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
         }
     }
 
-    override fun getMovies(movieService: MovieService,
-                           page: Int,
-                           keyword: String,
-                           progress: LinearLayout): LiveData<List<MdlMovieList>> {
+    override fun getMovies(
+        movieService: MovieService,
+        page: Int,
+        keyword: String,
+        progress: LinearLayout
+    ): LiveData<List<MdlMovieList>> {
         val movieResults = MutableLiveData<List<MdlMovieList>>()
-        remoteRepository.getMovies(object : RemoteRepository.LoadMoviesCallback {
-            override fun onAllMoviesReceived(courseResponses: List<MdlMovieList>) {
-                movieResults.postValue(courseResponses)
-            }
+        remoteRepository.getMovies(
+            object : RemoteRepository.LoadMoviesCallback {
+                override fun onAllMoviesReceived(courseResponses: List<MdlMovieList>) {
+                    movieResults.postValue(courseResponses)
+                }
 
-            override fun onDataNotAvailable(response: String) {
-                errorResponse.postValue(response)
-            }
-        },
-                movieService,
-                page,
-                keyword,
-                progress)
+                override fun onDataNotAvailable(response: String) {
+                    errorResponse.postValue(response)
+                }
+            },
+            movieService,
+            page,
+            keyword,
+            progress
+        )
 
 
         return movieResults
     }
 
-    override fun getDetails(movieService: MovieService, imdbID: String?, progress: LinearLayout): LiveData<MdlDetail> {
+    override fun getDetails(
+        movieService: MovieService,
+        imdbID: String?,
+        progress: LinearLayout
+    ): LiveData<MdlDetail> {
         val movieDetail = MutableLiveData<MdlDetail>()
 
         remoteRepository.getDetails(object : RemoteRepository.LoadDetailCallback {

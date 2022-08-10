@@ -29,7 +29,7 @@ class MovieApp : Application() {
         // Logging
         Timber.plant(Timber.DebugTree())
 
-        val niddler =  AndroidNiddler.Builder()
+        val niddler = AndroidNiddler.Builder()
             .setPort(0) //Use port 0 to prevent conflicting ports, auto-discovery will find it anyway!
             .setNiddlerInformation(AndroidNiddler.fromApplication(this)) //Set com.niddler.icon in AndroidManifest meta-data to an icon you wish to use for this session
             .setMaxStackTraceSize(10)
@@ -41,7 +41,7 @@ class MovieApp : Application() {
         initDaggerModule(niddler)
     }
 
-    private fun initDaggerModule(mNiddler: AndroidNiddler){
+    private fun initDaggerModule(mNiddler: AndroidNiddler) {
         val omdbModule = OmdbModule()
         omdbModule.androidNiddler = mNiddler
         appComponent =
