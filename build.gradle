@@ -30,7 +30,7 @@ buildscript {
         mockitoVersion = '2.23.4'
         pagingVersion = '2.1.0'
         stetho = '1.5.1'
-        timberVersion = '4.7.1'
+        timberVersion = '5.0.1'
         okhttpVersion = '2.6.0'
         retrofitVersion = '2.9.0'
         navigationVersion = '2.5.1'

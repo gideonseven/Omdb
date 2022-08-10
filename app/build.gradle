@@ -79,13 +79,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version")
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-
-    // Dagger
-    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-
     // Dependencies for Glide
     implementation("com.github.bumptech.glide:glide:$rootProject.glideVersion") {
         exclude group: "androidx"
@@ -108,11 +101,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+
+    // Dagger - HILT
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
-
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-
-
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
 
