@@ -1,12 +1,9 @@
 package com.don.omdb.usecase
 
-import com.don.omdb.data.remote.movies.Movies
 import com.don.omdb.repository.IOmdbRepository
 import com.don.omdb.utils.RequestType
-import com.don.omdb.utils.ResponseState
 import com.don.omdb.utils.succeedMapper
 import com.paulrybitskyi.hiltbinder.BindType
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -34,7 +31,16 @@ class OmdbUseCaseImpl @Inject constructor(
     override fun getMovies(
         requestType: RequestType,
         page: Int
-    ) =   repository.getMovies(requestType, page)
+    ) = repository.getMovies(requestType, page)
+        .succeedMapper {
+            it
+        }
+
+    override fun getSearchMovies(
+        requestType: RequestType,
+        query: String,
+        page: Int
+    ) = repository.getSearchMovies(requestType, query, page)
         .succeedMapper {
             it
         }

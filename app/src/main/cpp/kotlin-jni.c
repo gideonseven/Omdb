@@ -7,7 +7,7 @@
 JNIEXPORT jstring JNICALL
 Java_com_don_omdb_utils_JniHelper_baseUrl(JNIEnv *env, __unused jobject thiz) {
 //    return (*env)->NewStringUTF(env, "https://api.unsplash.com/");
-    return (*env)->NewStringUTF(env, "https://api.themoviedb.org/3/movie/");
+    return (*env)->NewStringUTF(env, "https://api.themoviedb.org/3/");
 }
 
 JNIEXPORT jstring JNICALL

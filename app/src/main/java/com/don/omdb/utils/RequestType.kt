@@ -8,4 +8,5 @@ package com.don.omdb.utils
  */
 sealed class RequestType : CoreRequestType() {
     object GET_MOVIES : RequestType()
+    object GET_SEARCH_MOVIES : RequestType()
 }

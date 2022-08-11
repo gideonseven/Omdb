@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
-import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import com.don.omdb.R
 import com.don.omdb.databinding.FragmentSheetSearchBinding
+import com.don.omdb.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
-import java.util.*
 
 
 /**
@@ -37,7 +35,8 @@ class SheetSearchFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val imm = parentFragment?.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            parentFragment?.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
 
@@ -48,11 +47,13 @@ class SheetSearchFragment : BottomSheetDialogFragment() {
                     imm.hideSoftInputFromWindow(etSearch.windowToken, 0)
 
                     Timber.e("==-== EVENT ${tv.text}")
+                    val searchQuery = tv.text.toString()
 
                     //reset list on adapter
                     parentFragmentManager.setFragmentResult(
-                        "requestKey",
-                        bundleOf("bundleKey" to tv.text)
+                        Constants.RESULT_KEY, bundleOf(
+                            Constants.EXTRA_QUERY to searchQuery
+                        )
                     )
                     dismiss()
                     return@OnEditorActionListener true
@@ -60,14 +61,6 @@ class SheetSearchFragment : BottomSheetDialogFragment() {
                 false
             })
         }
-
-        activity?.onBackPressedDispatcher?.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    dismiss()
-                }
-            })
     }
 
     override fun onDestroyView() {

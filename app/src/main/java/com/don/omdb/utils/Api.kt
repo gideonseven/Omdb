@@ -15,10 +15,10 @@ object Api {
     enum class RequestStatus(val status: String) {
         SUCCESS("success"),
         FAIL("fail"),
-        UNAUTHORIZED("403"),
+        BAD_REQUEST("400"),
+        UNAUTHORIZED("401"),
+        FORBIDDEN("403"),
         NOT_FOUND("404"),
-        MAINTENANCE("maintenance"),
-        BLACKLIST("blacklist"),
-        OBSOLETE("obsolete_app");
+        SERVER_ERROR("500"),
     }
 }

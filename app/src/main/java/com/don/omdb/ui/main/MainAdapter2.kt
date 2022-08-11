@@ -39,15 +39,13 @@ class MainAdapter2 constructor(val onClick: (ResultsItem) -> Unit) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (listMovies[position].id == TYPE_PROGRESS) {
-            TYPE_PROGRESS
-        } else {
-            TYPE_ITEM
+        return when (listMovies[position].id) {
+            TYPE_PROGRESS -> TYPE_PROGRESS
+            else -> TYPE_ITEM
         }
     }
 
     override fun getItemCount() = listMovies.size
-
 
     inner class MovieViewHolder(private val binding: ItemListMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -75,11 +73,16 @@ class MainAdapter2 constructor(val onClick: (ResultsItem) -> Unit) :
         notifyItemInserted(this.listMovies.size)
     }
 
+    fun resetData(productList: List<ResultsItem>) {
+        this.listMovies = productList
+        notifyDataSetChanged()
+    }
+
     fun setSpanSizeLookUp(layoutManager: GridLayoutManager) {
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (getItemViewType(position)) {
-                    TYPE_PROGRESS-> layoutManager.spanCount
+                    TYPE_PROGRESS -> layoutManager.spanCount
                     TYPE_ITEM -> 1
                     else -> -1
                 }

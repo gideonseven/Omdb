@@ -31,9 +31,6 @@ sealed class ResponseState<out Type : CoreRequestType, out Result : Any?> {
         ResponseState<Type, Nothing>()
 
     class NoAuth<Type : CoreRequestType>(val type: Type) : ResponseState<Type, Nothing>()
-    class Maintenance(val message: String?) : ResponseState<Nothing, Nothing>()
-    class ObsoleteApp(val message: String?) : ResponseState<Nothing, Nothing>()
-    object Blacklist : ResponseState<Nothing, Nothing>() // TODO("Belum di-handle")
     object Empty : ResponseState<Nothing, Nothing>()
 }
 
@@ -62,25 +59,9 @@ suspend inline fun <reified Type : CoreRequestType, reified Result> Context.hand
             uiStateFlow.value = State.CONTENT
             onSuccess(responseState.type, responseState.value)
         }
-        is ResponseState.ObsoleteApp -> {
-            // ResponseState.ObsoleteApp sudah fix hanya akan berfungsi sebagai force update app, tidak ada kaitan
-            // update halaman apapun. Langsung di-handle di sini
-            uiStateFlow.value = State.CONTENT
-
-        }
-        is ResponseState.Maintenance -> {
-            // ResponseState.Maintenance sudah fix hanya akan berfungsi sebagai force update app, tidak ada kaitan
-            // update halaman apapun. Langsung di-handle di sini
-            uiStateFlow.value = State.CONTENT
-
-        }
         is ResponseState.NoAuth -> {
             uiStateFlow.value = State.CONTENT
             onNotAuthorized(responseState.type)
-        }
-        is ResponseState.Blacklist -> {
-            uiStateFlow.value = State.CONTENT
-            // TODO("ResponseState.Blacklist: What's next?")
         }
         else -> {
             /* Do nothing */

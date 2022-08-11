@@ -6,7 +6,9 @@ import com.don.omdb.data.remote.movies.Movies
 import com.don.omdb.utils.Api
 import com.don.omdb.utils.JniHelper
 import com.skydoves.sandwich.ApiResponse
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 /**
  * Created by gideon on 02,December,2019
@@ -28,16 +30,18 @@ interface OmdbApi {
         @Query("order_by") order_by: String,
     ): ApiResponse<List<UnsplashItem>>
 
-    @GET("now_playing")
+    @GET("movie/now_playing")
     suspend fun getMoviesList(
         @Query("api_key") apiKey: String = JniHelper.apiKey(),
         @Query("page") page: Int,
         @Query("language") order_by: String = "en-US",
     ): ApiResponse<Movies>
 
-    @GET(".")
-    suspend fun getDetailMovie(
-        @Query("apikey") apiKey: String,
-        @Query("i") imdbID: String?
-    ): ApiResponse<MdlDetail>
+    @GET("search/movie")
+    suspend fun getSearchMovie(
+        @Query("api_key") apiKey: String = JniHelper.apiKey(),
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("language") order_by: String = "en-US",
+    ): ApiResponse<Movies>
 }

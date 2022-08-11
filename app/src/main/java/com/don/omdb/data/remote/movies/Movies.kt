@@ -1,7 +1,10 @@
 package com.don.omdb.data.remote.movies
 
+import com.don.omdb.utils.BaseNetworkModel
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Movies(
 
 	@Json(name="dates")
@@ -17,5 +20,9 @@ data class Movies(
 	val results: List<ResultsItem>? = null,
 
 	@Json(name="total_results")
-	val totalResults: Int? = null
-)
+	val totalResults: Int? = null,
+
+	override val status: String?,
+
+	override val message: String?
+): BaseNetworkModel

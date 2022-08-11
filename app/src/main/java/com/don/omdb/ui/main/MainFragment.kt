@@ -1,13 +1,10 @@
 package com.don.omdb.ui.main
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,14 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.R
 import com.don.omdb.databinding.FragmentMainBinding
+import com.don.omdb.databinding.ViewStateErrorBinding
 import com.don.omdb.utils.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
 
 
 /**
@@ -40,7 +35,8 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
             Timber.e("=== item clicked")
         })
     }
-// TODO UNIT TEST AND MOVE TO NEW PROJECT AND IMPLEMENT SEARCH API
+
+    // TODO UNIT TEST AND MOVE TO NEW PROJECT AND IMPLEMENT SEARCH API
     override fun getViewState() = binding.viewState
 
     override fun onCreateView(
@@ -83,24 +79,29 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
             fabChanger.setOnClickListener {
                 viewModel.isLinear.value = rv.layoutManager == linearLayoutManager
-                rv.layoutManager = if(viewModel.isLinear.value == true) gridLayoutManager else linearLayoutManager
+                rv.layoutManager =
+                    if (viewModel.isLinear.value == true) gridLayoutManager else linearLayoutManager
                 mAdapter.setSpanSizeLookUp(gridLayoutManager)
             }
 
             fabSearch.setOnClickListener {
                 val sheetSearch = SheetSearchFragment()
-                val sheetBehaviour = (sheetSearch.dialog as? BottomSheetDialog)?.behavior
-//                sheetBehaviour?.maxHeight = 500
-                sheetSearch.show(childFragmentManager,sheetSearch.tag)
+                sheetSearch.show(childFragmentManager, sheetSearch.tag)
             }
 
             childFragmentManager.setFragmentResultListener(
-                "requestKey",
+                Constants.RESULT_KEY,
                 viewLifecycleOwner
-            ) { key, bundle ->
-                val result = bundle.getString("bundleKey")
-                println("heeeeeeere: "+ result)
-                // Do something with the result
+            ) { _, bundle ->
+                val result = bundle.getString(Constants.EXTRA_QUERY) ?: Constants.TEXT_BLANK
+                Timber.e("heeeeeeere:  $result")
+                // set event to search photos
+                viewModel.apply {
+                    currentPage = Constants.ONE
+                    query = result
+                    mAdapter.resetData(listOf())
+                    setEvent(MainContract.MainEvent.GetSearchPhotos)
+                }
             }
         }
         viewLifecycleOwner.lifecycleScope.observe(
@@ -125,10 +126,51 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
                 uiState.responseStateMovies,
                 getUiStateFlow(),
                 onLoading = {
-                    // TODO ntr keknya di sini bisa dibikin untuk update item di recyclerview
                     if (viewModel.currentPage == Constants.ONE) updateUIStateFlow(State.LOADING)
                     Timber.e("== onLoading FRAGMENT")
                 },
+                onFailed = { _, model ->
+                    updateUIStateFlow(State.ERROR)
+                    Timber.e("== onFailed FRAGMENT ${model.message}")
+
+                    val bindingError = binding.viewState.getView(State.ERROR)?.let { it ->
+                        Timber.e("== onFailed VIEW EXIST")
+
+                        ViewStateErrorBinding.bind(it)
+                    }
+                    bindingError?.errorDescription?.text = model.message
+                    bindingError?.errorRetry?.setOnClickListener {
+                        viewModel.setEvent(
+                            MainContract.MainEvent.GetPhotos
+                        )
+                    }
+                }
+            )
+
+
+            nonNullContext.handleResponseState(
+                uiState.responseStateSearchMovies,
+                getUiStateFlow(),
+                onLoading = {
+                    if (viewModel.currentPage == Constants.ONE) updateUIStateFlow(State.LOADING)
+                    Timber.e("== onLoading FRAGMENT")
+                },
+                onFailed = { _, model ->
+                    updateUIStateFlow(State.ERROR)
+                    Timber.e("== onFailed FRAGMENT ${model.message}")
+
+                    val bindingError = binding.viewState.getView(State.ERROR)?.let { it ->
+                        Timber.e("== onFailed VIEW EXIST")
+
+                        ViewStateErrorBinding.bind(it)
+                    }
+                    bindingError?.errorDescription?.text = model.message
+                    bindingError?.errorRetry?.setOnClickListener {
+                        viewModel.setEvent(
+                            MainContract.MainEvent.GetSearchPhotos
+                        )
+                    }
+                }
             )
         }
     }
@@ -138,6 +180,9 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
             when (it) {
                 is MainContract.MainEffect.AddNewList -> {
                     mAdapter.addData(it.list)
+                }
+                is MainContract.MainEffect.ShowToastUnauthorized -> {
+                    Toast.makeText(nonNullContext, it.message, Toast.LENGTH_LONG).show()
                 }
             }
         }

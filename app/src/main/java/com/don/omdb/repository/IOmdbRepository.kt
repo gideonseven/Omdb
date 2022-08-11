@@ -25,4 +25,7 @@ interface IOmdbRepository : Repository {
 
     fun getMovies( requestType: RequestType,page: Int
     ): Flow<ResponseState<RequestType, Movies?>>
+
+    fun getSearchMovies(requestType: RequestType, query: String, page: Int
+    ): Flow<ResponseState<RequestType, Movies?>>
 }

@@ -1,8 +1,6 @@
 package com.don.omdb.ui.main
 
 import androidx.lifecycle.MutableLiveData
-import com.don.omdb.data.remote.UnsplashItem
-import com.don.omdb.data.remote.movies.ResultsItem
 import com.don.omdb.usecase.IOmdbUseCase
 import com.don.omdb.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +22,8 @@ class MainViewModel @Inject constructor(
         const val PER_PAGE = 3
     }
 
+    var query = Constants.TEXT_BLANK
+
     var currentPage = Constants.ONE
 
     var isLinear = MutableLiveData<Boolean>().apply {
@@ -36,11 +36,13 @@ class MainViewModel @Inject constructor(
 
     override fun createInitialState(): MainContract.MainState = MainContract.MainState()
 
-
     override fun handleEvent(event: MainContract.MainEvent) {
         when (event) {
             is MainContract.MainEvent.GetPhotos -> {
                 getMovies2()
+            }
+            is MainContract.MainEvent.GetSearchPhotos -> {
+                getSearchMovie()
             }
             is MainContract.MainEvent.UpdateListAdapter -> setEffect {
                 MainContract.MainEffect.AddNewList(
@@ -50,33 +52,33 @@ class MainViewModel @Inject constructor(
         }
     }
 
-   /* private fun getMovies() {
-        Timber.e("CALL GET MOVIES")
-        launchRequest {
-            setState {
-                copy(responseState = ResponseState.Loading(RequestType.GET_MOVIES))
-            }
-            omdbUseCase.getMovies(
-                RequestType.GET_MOVIES,
-                page = currentPage,
-                perPage = PER_PAGE,
-                orderBy = TYPE
-            )
-                .handleErrors(RequestType.GET_MOVIES)
-                .handleResult(
-                    updateState = {
-                        setState { copy(responseState = it) }
-                    },
-                    onSuccess = { _, result ->
-                        result?.let {
-                            Timber.e("== onSuccess VM ${it.size}")
-                            Timber.e("==== ${it[0]}")
-                            val listImages: ArrayList<UnsplashItem> = result as ArrayList
-                            listImages.add(UnsplashItem(id = Constants.LOADING_ID))
+    /* private fun getMovies() {
+         Timber.e("CALL GET MOVIES")
+         launchRequest {
+             setState {
+                 copy(responseState = ResponseState.Loading(RequestType.GET_MOVIES))
+             }
+             omdbUseCase.getMovies(
+                 RequestType.GET_MOVIES,
+                 page = currentPage,
+                 perPage = PER_PAGE,
+                 orderBy = TYPE
+             )
+                 .handleErrors(RequestType.GET_MOVIES)
+                 .handleResult(
+                     updateState = {
+                         setState { copy(responseState = it) }
+                     },
+                     onSuccess = { _, result ->
+                         result?.let {
+                             Timber.e("== onSuccess VM ${it.size}")
+                             Timber.e("==== ${it[0]}")
+                             val listImages: ArrayList<UnsplashItem> = result as ArrayList
+                             listImages.add(UnsplashItem(id = Constants.LOADING_ID))
 
-                            setEvent(MainContract.MainEvent.UpdateListAdapter(listImages))
+                             setEvent(MainContract.MainEvent.UpdateListAdapter(listImages))
 
-                            *//*    listUnsplashItem = listUnsplashItem
+                             *//*    listUnsplashItem = listUnsplashItem
                                 listUnsplashItem.value?.let { list ->
                                 }*//*
                         }
@@ -113,13 +115,38 @@ class MainViewModel @Inject constructor(
                             setEvent(MainContract.MainEvent.UpdateListAdapter(it))
                         }
                     },
-                    onFailed = { _, model ->
-                        Timber.e("== onFailed VM")
-                        Timber.e("==== ${model.message}")
+                    onNotAuthorized = {
+                        setEffect { MainContract.MainEffect.ShowToastUnauthorized("FORBIDDEN") }
+                    }
+                )
+        }
+    }
+
+    private fun getSearchMovie() {
+        Timber.e("CALL SEARCH MOVIES")
+        Timber.e(" ===== $currentPage")
+        Timber.e(" ===== $query")
+        launchRequest {
+            setState {
+                copy(responseStateSearchMovies = ResponseState.Loading(RequestType.GET_SEARCH_MOVIES))
+            }
+            omdbUseCase.getSearchMovies(
+                RequestType.GET_SEARCH_MOVIES,
+                page = currentPage,
+                query = query
+            )
+                .handleErrors(RequestType.GET_SEARCH_MOVIES)
+                .handleResult(
+                    updateState = {
+                        setState { copy(responseStateSearchMovies = it) }
+                    },
+                    onSuccess = { _, movies ->
+                        movies?.results?.let {
+                            setEvent(MainContract.MainEvent.UpdateListAdapter(it))
+                        }
                     },
                     onNotAuthorized = {
-                        Timber.e("== onNotAuthorized VM")
-                        Timber.e("==== ${it}")
+                        setEffect { MainContract.MainEffect.ShowToastUnauthorized("FORBIDDEN") }
                     }
                 )
         }

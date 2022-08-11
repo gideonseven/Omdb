@@ -12,5 +12,7 @@ object Constants {
     const val ZERO = 0
     const val LOADING_ID = "-1"
     const val ONE = 1
+    const val EXTRA_QUERY = "extra_query"
+    const val RESULT_KEY = "result_key"
 
 }

@@ -34,12 +34,6 @@ fun <Type : CoreRequestType, Result, ResultConverter> getResult(
             noAuth = {
                 throw ApiException.NotAuth
             },
-            obsoleteApp = {
-                throw ApiException.ObsoleteApp(it)
-            },
-            maintenance = {
-                throw ApiException.Maintenance(it)
-            },
             converter = {
                 converter(it)
             }

@@ -17,16 +17,19 @@ class MainContract {
 //        object DoSomethingHappened: MainEffect()
 //        class AddNewList(val list: ArrayList<UnsplashItem>): MainEffect()
         class AddNewList(val list: List<ResultsItem>): MainEffect()
+        class ShowToastUnauthorized(val message: String): MainEffect()
     }
 
     sealed class MainEvent : UiEvent {
         object GetPhotos: MainEvent()
+        object GetSearchPhotos: MainEvent()
 //        class UpdateListAdapter(val list: ArrayList<UnsplashItem>): MainEvent()
         class UpdateListAdapter(val list: List<ResultsItem>): MainEvent()
     }
 
     data class MainState(
 //        val responseState: ResponseState<RequestType, List<UnsplashItem>?> = ResponseState.Empty,
-        val responseStateMovies: ResponseState<RequestType, Movies?> = ResponseState.Empty
+        val responseStateMovies: ResponseState<RequestType, Movies?> = ResponseState.Empty,
+        val responseStateSearchMovies: ResponseState<RequestType, Movies?> = ResponseState.Empty
     ) : UiState
 }

@@ -21,17 +21,3 @@ fun View.hide(): View {
     }
     return this
 }
-
-fun View.invisible() {
-    if (visibility != View.INVISIBLE) {
-        visibility = View.INVISIBLE
-    }
-}
-
-fun View.disabled() {
-    this.isEnabled = false
-}
-
-fun View.enabled() {
-    this.isEnabled = true
-}
