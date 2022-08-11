@@ -40,7 +40,7 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
             Timber.e("=== item clicked")
         })
     }
-
+// TODO UNIT TEST AND MOVE TO NEW PROJECT AND IMPLEMENT SEARCH API
     override fun getViewState() = binding.viewState
 
     override fun onCreateView(
