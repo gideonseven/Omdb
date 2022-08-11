@@ -97,9 +97,16 @@ object OmdbModule {
         }.build()
     }
 
-    @Singleton
+   /* @Singleton
     @Provides
     fun providesOmdbApi(retrofit: Retrofit, @OkHttpWithAuth okHttpClient: OkHttpClient): OmdbApi {
+        return  retrofit.newBuilder().client(okHttpClient).build()
+            .create(OmdbApi::class.java)
+    }*/
+
+    @Singleton
+    @Provides
+    fun providesOmdbApi(retrofit: Retrofit, @OkHttpDefault okHttpClient: OkHttpClient): OmdbApi {
         return  retrofit.newBuilder().client(okHttpClient).build()
             .create(OmdbApi::class.java)
     }

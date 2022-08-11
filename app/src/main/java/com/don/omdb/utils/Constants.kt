@@ -9,5 +9,8 @@ package com.don.omdb.utils
 object Constants {
 
     const val TEXT_BLANK = ""
+    const val ZERO = 0
+    const val LOADING_ID = "-1"
+    const val ONE = 1
 
 }

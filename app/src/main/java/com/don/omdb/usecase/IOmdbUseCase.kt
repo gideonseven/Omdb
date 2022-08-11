@@ -1,6 +1,7 @@
 package com.don.omdb.usecase
 
 import com.don.omdb.data.remote.UnsplashItem
+import com.don.omdb.data.remote.movies.Movies
 import com.don.omdb.utils.RequestType
 import com.don.omdb.utils.ResponseState
 import kotlinx.coroutines.flow.Flow
@@ -19,4 +20,7 @@ interface IOmdbUseCase {
         perPage: Int,
         orderBy: String
     ): Flow<ResponseState<RequestType, List<UnsplashItem>?>>
+
+    fun getMovies( requestType: RequestType,page: Int
+    ): Flow<ResponseState<RequestType, Movies?>>
 }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.don.omdb.utils.MultiStateView
         android:id="@+id/view_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:background="@color/colorGreen"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/_20dp"/>
+            android:layout_height="match_parent"/>
     </com.don.omdb.utils.MultiStateView>
 </layout>

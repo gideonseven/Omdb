@@ -1,9 +1,11 @@
 package com.don.omdb.data.repository
 
 import com.don.omdb.api.OmdbApi
+import com.don.omdb.data.remote.movies.Movies
 import com.don.omdb.repository.IOmdbRepository
 import com.don.omdb.utils.*
 import com.paulrybitskyi.hiltbinder.BindType
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -25,6 +27,14 @@ class OmdbRepositoryImpl @Inject constructor(
     ) = getResult(
         requestType,
         call = { api.getMoviesList(page = page, per_page = perPage, order_by = orderBy) },
+        converter = { it }
+    ).succeedMapper {
+        it?.second
+    }
+
+    override fun getMovies(requestType: RequestType, page: Int): Flow<ResponseState<RequestType, Movies?>> = getResult(
+        requestType,
+        call = { api.getMoviesList(page = page) },
         converter = { it }
     ).succeedMapper {
         it?.second

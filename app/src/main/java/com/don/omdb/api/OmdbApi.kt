@@ -2,6 +2,7 @@ package com.don.omdb.api
 
 import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.data.remote.UnsplashItem
+import com.don.omdb.data.remote.movies.Movies
 import com.don.omdb.utils.Api
 import com.don.omdb.utils.JniHelper
 import com.skydoves.sandwich.ApiResponse
@@ -26,6 +27,13 @@ interface OmdbApi {
         @Query("per_page") per_page: Int,
         @Query("order_by") order_by: String,
     ): ApiResponse<List<UnsplashItem>>
+
+    @GET("now_playing")
+    suspend fun getMoviesList(
+        @Query("api_key") apiKey: String = JniHelper.apiKey(),
+        @Query("page") page: Int,
+        @Query("language") order_by: String = "en-US",
+    ): ApiResponse<Movies>
 
     @GET(".")
     suspend fun getDetailMovie(

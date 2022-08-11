@@ -7,12 +7,6 @@
     <dimen name="text_size_20">20sp</dimen>
 
 
-    <dimen name="margin_size_4dp">4dp</dimen>
-    <dimen name="margin_size_8dp">8dp</dimen>
-    <dimen name="margin_size_16dp">16dp</dimen>
-    <dimen name="margin_size_72dp">72dp</dimen>
-    <dimen name="margin_size_100dp">100dp</dimen>
-
     <!--    margin size-->
     <dimen name="_0dp">0dp</dimen>
     <dimen name="_0.1dp">0.1dp</dimen>
