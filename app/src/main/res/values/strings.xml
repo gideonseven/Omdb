@@ -13,4 +13,5 @@
     <string name="text_error">Error</string>
     <string name="floating_search">floating search</string>
     <string name="floating_layout_changer">floating layout changer</string>
+    <string name="find_images">Find images</string>
 </resources>

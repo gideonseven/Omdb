@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.R
 import com.don.omdb.databinding.FragmentMainBinding
 import com.don.omdb.utils.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -83,6 +85,22 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
                 viewModel.isLinear.value = rv.layoutManager == linearLayoutManager
                 rv.layoutManager = if(viewModel.isLinear.value == true) gridLayoutManager else linearLayoutManager
                 mAdapter.setSpanSizeLookUp(gridLayoutManager)
+            }
+
+            fabSearch.setOnClickListener {
+                val sheetSearch = SheetSearchFragment()
+                val sheetBehaviour = (sheetSearch.dialog as? BottomSheetDialog)?.behavior
+//                sheetBehaviour?.maxHeight = 500
+                sheetSearch.show(childFragmentManager,sheetSearch.tag)
+            }
+
+            childFragmentManager.setFragmentResultListener(
+                "requestKey",
+                viewLifecycleOwner
+            ) { key, bundle ->
+                val result = bundle.getString("bundleKey")
+                println("heeeeeeere: "+ result)
+                // Do something with the result
             }
         }
         viewLifecycleOwner.lifecycleScope.observe(

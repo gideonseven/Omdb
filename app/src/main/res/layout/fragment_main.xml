@@ -5,7 +5,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.don.omdb.ui.main.MainViewModel" />
@@ -25,9 +26,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_48dp"
+                android:layout_marginBottom="@dimen/_24dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:contentDescription="@string/floating_search"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_search"
@@ -38,13 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_24dp"
+                android:layout_marginBottom="@dimen/_12dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:contentDescription="@string/floating_layout_changer"
+                android:src="@{!vm.isLinear ? @drawable/ic_grid : @drawable/ic_linear}"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/fab_search"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@{!vm.isLinear ? @drawable/ic_grid : @drawable/ic_linear}"
                 app:tint="@color/colorWhite"
                 tools:src="@drawable/ic_linear" />
 
