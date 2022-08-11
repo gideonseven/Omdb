@@ -55,7 +55,7 @@ class MainAdapter constructor(val onClick: (UnsplashItem) -> Unit) :
 
         fun bind(movie: UnsplashItem) {
             binding.apply {
-                data = movie
+//                data = movie
                 ll.setOnClickListener { onClick(movie) }
             }
         }

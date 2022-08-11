@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.R
@@ -52,8 +53,12 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            val linearLayoutManager = LinearLayoutManager(nonNullContext)
+            val gridLayoutManager = GridLayoutManager(nonNullContext, 2)
             with(rv) {
                 adapter = mAdapter
+
+                layoutManager = linearLayoutManager
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
@@ -62,27 +67,19 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
                             mAdapter.addLoading()
                             lifecycleScope.launch {
-                                delay(2000)
+                                delay(1000)
                                 viewModel.currentPage++
                                 viewModel.setEvent(MainContract.MainEvent.GetPhotos)
                             }
                         }
                     }
-
-                   /* override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        if (!recyclerView.canScrollVertically(Constants.ONE)) {
-                            Toast.makeText(nonNullContext, "Last", Toast.LENGTH_LONG).show()
-
-                            lifecycleScope.launch {
-                                delay(500)
-                                mAdapter.removeLoading()
-                                viewModel.currentPage++
-                                viewModel.setEvent(MainContract.MainEvent.GetPhotos)
-                            }
-                        }
-                    }*/
                 })
+            }
+
+            btnChange.setOnClickListener {
+                val isLinear = rv.layoutManager == linearLayoutManager
+                rv.layoutManager = if(isLinear) gridLayoutManager else linearLayoutManager
+                mAdapter.setSpanSizeLookUp(gridLayoutManager)
             }
         }
         viewLifecycleOwner.lifecycleScope.observe(
@@ -94,16 +91,17 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     private suspend fun handleState() {
         viewModel.uiState.collect { uiState ->
-           /* nonNullContext.handleResponseState(uiState.responseState,
-                getUiStateFlow(),
-                onLoading = {
-                    // TODO ntr keknya di sini bisa dibikin untuk update item di recyclerview
-                    if (viewModel.currentPage == Constants.ZERO) updateUIStateFlow(State.LOADING)
-                    Timber.e("== onLoading FRAGMENT")
-                },
-            )*/
+            /* nonNullContext.handleResponseState(uiState.responseState,
+                 getUiStateFlow(),
+                 onLoading = {
+                     // TODO ntr keknya di sini bisa dibikin untuk update item di recyclerview
+                     if (viewModel.currentPage == Constants.ZERO) updateUIStateFlow(State.LOADING)
+                     Timber.e("== onLoading FRAGMENT")
+                 },
+             )*/
 
-            nonNullContext.handleResponseState(uiState.responseStateMovies,
+            nonNullContext.handleResponseState(
+                uiState.responseStateMovies,
                 getUiStateFlow(),
                 onLoading = {
                     // TODO ntr keknya di sini bisa dibikin untuk update item di recyclerview
@@ -115,9 +113,9 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
     }
 
     private suspend fun handleEffect() {
-        viewModel.effect.collect{
-            when(it){
-                is MainContract.MainEffect.AddNewList ->{
+        viewModel.effect.collect {
+            when (it) {
+                is MainContract.MainEffect.AddNewList -> {
                     mAdapter.addData(it.list)
                 }
             }
