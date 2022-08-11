@@ -26,6 +26,10 @@ class MainViewModel @Inject constructor(
 
     var currentPage = Constants.ONE
 
+    var isLinear = MutableLiveData<Boolean>().apply {
+        value = null
+    }
+
     init {
         setEvent(MainContract.MainEvent.GetPhotos)
     }

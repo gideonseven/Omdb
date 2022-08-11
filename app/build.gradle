@@ -21,6 +21,7 @@ android {
                 arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
             }
         }
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

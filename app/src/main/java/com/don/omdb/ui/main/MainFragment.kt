@@ -1,10 +1,13 @@
 package com.don.omdb.ui.main
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 
 /**
@@ -28,8 +32,6 @@ import timber.log.Timber
 class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by viewModels()
-
-//    private var mainBinding: FragmentMainBinding? = null
 
     private val mAdapter: MainAdapter2 by lazy {
         MainAdapter2(onClick = {
@@ -47,6 +49,7 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
         super.onCreateView(inflater, container, savedInstanceState)
         return binding {
             lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
         }.root
     }
 
@@ -76,9 +79,9 @@ class MainFragment : AppFragment<FragmentMainBinding>(R.layout.fragment_main) {
                 })
             }
 
-            btnChange.setOnClickListener {
-                val isLinear = rv.layoutManager == linearLayoutManager
-                rv.layoutManager = if(isLinear) gridLayoutManager else linearLayoutManager
+            fabChanger.setOnClickListener {
+                viewModel.isLinear.value = rv.layoutManager == linearLayoutManager
+                rv.layoutManager = if(viewModel.isLinear.value == true) gridLayoutManager else linearLayoutManager
                 mAdapter.setSpanSizeLookUp(gridLayoutManager)
             }
         }

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.don.omdb.ui.main.MainViewModel" />
+    </data>
 
     <com.don.omdb.utils.MultiStateView
         android:id="@+id/view_state"
@@ -11,26 +20,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:layout_marginBottom="@dimen/_48dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:contentDescription="@string/floating_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_search"
+                app:tint="@color/colorWhite" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_changer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:layout_marginBottom="@dimen/_24dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:contentDescription="@string/floating_layout_changer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/fab_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@{!vm.isLinear ? @drawable/ic_grid : @drawable/ic_linear}"
+                app:tint="@color/colorWhite"
+                tools:src="@drawable/ic_linear" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/_0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_change"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_list_movie" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </com.don.omdb.utils.MultiStateView>
 </layout>
