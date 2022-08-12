@@ -79,6 +79,6 @@
     </ScrollView>
 
     <include
-        layout="@layout/progress_dialog"
+        layout="@layout/item_loading"
         android:visibility="gone" />
 </RelativeLayout>

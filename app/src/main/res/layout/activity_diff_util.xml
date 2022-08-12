@@ -16,6 +16,6 @@
         android:layout_height="@dimen/_50dp"/>
 
     <include
-        layout="@layout/progress_dialog"
+        layout="@layout/item_loading"
         android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

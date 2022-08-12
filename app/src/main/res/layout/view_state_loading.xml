@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="lottie_cicil_loading.json"
+        app:lottie_fileName="lottie_loading.json"
         app:lottie_loop="true" />
 
     <TextView

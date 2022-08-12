@@ -9,7 +9,7 @@ import com.don.omdb.R
 import com.don.omdb.data.DiffModel
 import com.don.omdb.databinding.ItemEndOfProductBinding
 import com.don.omdb.databinding.ItemListDiffBinding
-import com.don.omdb.databinding.ItemLoadingLoadMoreBinding
+import com.don.omdb.databinding.ItemLoadingBinding
 import com.don.omdb.utils.AutoUpdatableAdapter
 
 
@@ -37,7 +37,7 @@ class DiffUtilAdapter constructor(val onClick: (DiffModel) -> Unit) :
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             LOADING_ITEM -> LoadingHolder(
-                ItemLoadingLoadMoreBinding.inflate(
+                ItemLoadingBinding.inflate(
                     inflater,
                     parent,
                     false
@@ -76,7 +76,7 @@ class DiffUtilAdapter constructor(val onClick: (DiffModel) -> Unit) :
         }
     }
 
-    inner class LoadingHolder(val binding: ItemLoadingLoadMoreBinding) : ViewHolder(binding.root)
+    inner class LoadingHolder(val binding: ItemLoadingBinding) : ViewHolder(binding.root)
 
     inner class EndProductHolder(val binding: ItemEndOfProductBinding) : ViewHolder(binding.root)
 

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.don.omdb.R
 import com.don.omdb.data.remote.movies.ResultsItem
 import com.don.omdb.databinding.ItemListMovieBinding
-import com.don.omdb.databinding.ItemLoadmoreBinding
+import com.don.omdb.databinding.ItemLoadingBinding
 import com.skydoves.bindables.binding
 
 
@@ -27,7 +27,7 @@ class MainAdapter2 constructor(val onClick: (ResultsItem) -> Unit) :
         return if (viewType == TYPE_ITEM) {
             MovieViewHolder(parent.binding(R.layout.item_list_movie))
         } else {
-            LoadHolder(parent.binding(R.layout.item_loadmore))
+            LoadHolder(parent.binding(R.layout.item_loading))
         }
     }
 
@@ -58,7 +58,7 @@ class MainAdapter2 constructor(val onClick: (ResultsItem) -> Unit) :
         }
     }
 
-    inner class LoadHolder(binding: ItemLoadmoreBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class LoadHolder(binding: ItemLoadingBinding) : RecyclerView.ViewHolder(binding.root)
 
     fun addData(productList: List<ResultsItem>) {
         removeLoading()
