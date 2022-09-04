@@ -21,7 +21,7 @@ class DetailViewModel : ViewModel() {
 
     private lateinit var mMovieService: MovieService
     private lateinit var mProgress: LinearLayout
-    var imdbID: String? = null
+    private var imdbID: String? = null
 
 
     fun getErrors(): LiveData<String> {

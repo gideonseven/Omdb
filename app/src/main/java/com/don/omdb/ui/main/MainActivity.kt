@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() {
 
     private fun setupVM() {
         (application as MovieApp).appComponent.inject(this)
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
         mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
         mainViewModel.getMovies().observe(this, getMovie)
         mainViewModel.getErrors().observe(this, getError)

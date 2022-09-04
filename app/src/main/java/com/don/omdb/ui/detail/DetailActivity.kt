@@ -47,7 +47,7 @@ class DetailActivity : BaseActivity() {
 
     private fun setupVM() {
         (application as MovieApp).appComponent.inject(this)
-        val detailViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        val detailViewModel = ViewModelProviders.of(this)[DetailViewModel::class.java]
         detailViewModel.setAttributes(movieService, imdbID, progressDialog)
         detailViewModel.getErrors().observe(this, getError)
         detailViewModel.getDetail().observe(this, getDetail)
