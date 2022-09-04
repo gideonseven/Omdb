@@ -29,17 +29,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun showErrorAlert(message: String) {
         val alertDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.alert_title)
-                .setMessage(message)
-                .setPositiveButton(
-                        R.string.alert_close
-                ) { dialog, _ ->
-                    if (message.contains("404")) {
+            .setTitle(R.string.alert_title)
+            .setMessage(message)
+            .setPositiveButton(
+                R.string.alert_close
+            ) { dialog, _ ->
+                if (message.contains("404")) {
 //                        logout()
-                    } else {
-                        dialog.dismiss()
-                    }
+                } else {
+                    dialog.dismiss()
                 }
+            }
             .create()
         alertDialog.show()
 
@@ -55,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun showSnackBar(string: String) {
         Snackbar.make(findViewById(android.R.id.content), string, Snackbar.LENGTH_LONG)
-                .show()
+            .show()
     }
 
 }

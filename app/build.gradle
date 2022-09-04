@@ -5,12 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.don.omdb"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -45,62 +44,41 @@ android {
 }
 
 dependencies {
+    // androidx
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    // Dependencies for Android Support
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.cardview:cardview:$cardVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "androidx.annotation:annotation:$androidXAnnotations"
-    implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
-
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    // Lifecycles only (without ViewModel or LiveData)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
-
-    // Saved state module for ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
-
-    // Annotation processor
-    // kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 
 
-    // Dagger
-    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    // dagger
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
 
-    // Dependencies for Glide
-    implementation("com.github.bumptech.glide:glide:$glideVersion") {
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:$glide_version") {
         exclude group: "androidx"
     }
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-    // Dependencies for Idle Resource
-    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
+
+    implementation "com.google.android.material:material:$material_version"
+    debugImplementation "com.chimerapps.niddler:niddler:$niddler_version"
+
 
     //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$gsonVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$loggingVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_version"
 
-    // Tools
-    implementation "com.jakewharton.timber:timber:$timberVersion"
-    implementation "com.facebook.stetho:stetho:$stetho"
-    implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
 
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-
-    debugImplementation 'com.chimerapps.niddler:niddler:1.5.5'
-    releaseImplementation 'com.chimerapps.niddler:niddler-noop:1.5.5'
+    // tools
+    implementation "com.jakewharton.timber:timber:$timber_version"
 }

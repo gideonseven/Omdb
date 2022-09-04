@@ -14,12 +14,18 @@ import com.don.omdb.data.remote.MdlMovieList
  */
 interface OmdbDataSource {
 
-    fun getMovies(movieService: MovieService,
-                  page: Int,
-                  keyword: String,
-                  progress: LinearLayout): LiveData<List<MdlMovieList>>
+    fun getMovies(
+        movieService: MovieService,
+        page: Int,
+        keyword: String,
+        progress: LinearLayout
+    ): LiveData<List<MdlMovieList>>
 
-    fun getDetails(movieService: MovieService, imdbID: String?, progress: LinearLayout): LiveData<MdlDetail>
+    fun getDetails(
+        movieService: MovieService,
+        imdbID: String?,
+        progress: LinearLayout
+    ): LiveData<MdlDetail>
 
     fun getError(): LiveData<String>
 

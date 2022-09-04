@@ -25,7 +25,7 @@ class OmdbModule {
     lateinit var androidNiddler: AndroidNiddler
 
     @Provides
-    internal fun providesOkHttpClient(): OkHttpClient{
+    internal fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(NiddlerOkHttpInterceptor(androidNiddler, "DEFAULT"))
             .build()
@@ -34,17 +34,17 @@ class OmdbModule {
     @Provides
     internal fun gson(): Gson {
         return GsonBuilder()
-                .serializeNulls()
-                .create()
+            .serializeNulls()
+            .create()
     }
 
     @Provides
     internal fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(JniHelper.baseUrl())
-                .addConverterFactory(GsonConverterFactory.create(gson()))
-                .client(providesOkHttpClient())
-                .build()
+            .baseUrl(JniHelper.baseUrl())
+            .addConverterFactory(GsonConverterFactory.create(gson()))
+            .client(providesOkHttpClient())
+            .build()
     }
 
     @Provides

@@ -79,7 +79,12 @@ class MainActivity : BaseActivity() {
                         mAdapter.setMoreDataAvailable(false)
                     } else {
                         progressDialog.visibility = View.VISIBLE
-                        mainViewModel.setAttributes(movieService, currentPage, myQuery, progressDialog)
+                        mainViewModel.setAttributes(
+                            movieService,
+                            currentPage,
+                            myQuery,
+                            progressDialog
+                        )
                         mainViewModel.getMovies().observe(this@MainActivity, getMovie)
                     }
                 }
@@ -108,8 +113,8 @@ class MainActivity : BaseActivity() {
                 //hide keyboard
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(
-                        Objects.requireNonNull<View>(currentFocus).windowToken,
-                        0
+                    Objects.requireNonNull<View>(currentFocus).windowToken,
+                    0
                 )
                 return true
             }

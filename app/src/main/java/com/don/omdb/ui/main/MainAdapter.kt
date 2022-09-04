@@ -14,7 +14,6 @@ import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.ui.detail.DetailActivity
 import com.don.omdb.utils.GlideUtil
 import com.don.omdb.utils.OnLoadMoreListener
-import java.util.*
 
 /**
  * Created by gideon on 03,December,2019
@@ -22,7 +21,7 @@ import java.util.*
  * Jakarta - Indonesia
  */
 class MainAdapter(private val activity: Activity) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listMovie = ArrayList<MdlMovieList>()
 
@@ -87,7 +86,7 @@ class MainAdapter(private val activity: Activity) :
     override fun getItemCount() = listMovie.size
 
     class MovieViewHolder internal constructor(itemView: View) :
-            RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView) {
         private val imgPhoto: ImageView = itemView.findViewById(R.id.ivPoster)
         private val tvName: TextView = itemView.findViewById(R.id.tvTitle)
         private val tvYear: TextView = itemView.findViewById(R.id.tvYear)
@@ -110,7 +109,7 @@ class MainAdapter(private val activity: Activity) :
     }
 
     private class LoadHolder(itemView: View) :
-            RecyclerView.ViewHolder(itemView)
+        RecyclerView.ViewHolder(itemView)
 
     fun setMoreDataAvailable(moreDataAvailable: Boolean) {
         isMoreDataAvailable = moreDataAvailable
