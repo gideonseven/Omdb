@@ -7,22 +7,25 @@ import androidx.lifecycle.ViewModel
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlDetail
-import com.don.omdb.data.remote.RemoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * Created by gideon on 03,December,2019
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-@SuppressLint("StaticFieldLeak")
-class DetailViewModel : ViewModel() {
+//@SuppressLint("StaticFieldLeak")
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val omdbRepository: OmdbRepository,
+    private val mMovieService: MovieService
+) : ViewModel() {
 
-    private val omdbRepository: OmdbRepository = OmdbRepository.getInstance(RemoteRepository())!!
 
-    private lateinit var mMovieService: MovieService
+    @SuppressLint("StaticFieldLeak")
     private lateinit var mProgress: LinearLayout
     private var imdbID: String? = null
-
 
     fun getErrors(): LiveData<String> {
         return omdbRepository.getError()
@@ -32,8 +35,7 @@ class DetailViewModel : ViewModel() {
         return omdbRepository.getDetails(mMovieService, imdbID, mProgress)
     }
 
-    fun setAttributes(movieService: MovieService, imdbID: String?, view: LinearLayout) {
-        this.mMovieService = movieService
+    fun setAttributes(imdbID: String?, view: LinearLayout) {
         this.imdbID = imdbID
         this.mProgress = view
     }

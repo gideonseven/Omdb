@@ -4,28 +4,27 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.don.omdb.MovieApp
 import com.don.omdb.R
-import com.don.omdb.api.MovieService
 import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.databinding.ActivityDetailBinding
 import com.don.omdb.ui.BaseActivity
 import com.don.omdb.utils.GlideUtil
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
+import kotlin.getValue
 
+@AndroidEntryPoint
 class DetailActivity : BaseActivity() {
     companion object {
         const val EXTRA_IMDB = "extra_imdb"
     }
 
-    @Inject
-    lateinit var movieService: MovieService
     private lateinit var progressDialog: LinearLayout
     private lateinit var binding: ActivityDetailBinding
 
+    private val detailViewModel: DetailViewModel by viewModels()
     private var imdbID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +45,7 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun setupVM() {
-        (application as MovieApp).appComponent.inject(this)
-        val detailViewModel = ViewModelProviders.of(this)[DetailViewModel::class.java]
-        detailViewModel.setAttributes(movieService, imdbID, progressDialog)
+        detailViewModel.setAttributes(imdbID, progressDialog)
         detailViewModel.getErrors().observe(this, getError)
         detailViewModel.getDetail().observe(this, getDetail)
     }
