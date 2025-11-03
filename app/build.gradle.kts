@@ -90,6 +90,9 @@ dependencies {
     }
     ksp(libs.glide.compiler)
 
+    // Coil for Compose images
+    implementation("io.coil-kt:coil-compose:2.2.1")
+
     // Material Design
     implementation(libs.material)
 

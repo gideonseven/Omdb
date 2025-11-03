@@ -14,13 +14,20 @@ import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.ui.detail.DetailActivity
 import com.don.omdb.utils.GlideUtil
 import com.don.omdb.utils.OnLoadMoreListener
+import androidx.compose.ui.platform.ComposeView
+import com.don.omdb.data.remote.MovieUi
+import com.don.omdb.data.remote.toUi
+import com.don.omdb.ui.components.MovieRow
 
 /**
  * Created by gideon on 03,December,2019
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class MainAdapter(private val activity: Activity) :
+class MainAdapter(
+    private val activity: Activity,
+    private val onItemClick: (String)-> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val listMovie = ArrayList<MdlMovieList>()
@@ -50,14 +57,17 @@ class MainAdapter(private val activity: Activity) :
         isLoading = false
     }
 
-    fun clearList() {
+    fun clear() {
         listMovie.clear()
+        notifyDataSetChanged()
+        isLoading = false
+        isMoreDataAvailable = true
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(activity)
         return if (viewType == TYPE_LINEAR) {
-            MovieViewHolder(inflater.inflate(R.layout.item_list_movie, parent, false))
+            ComposeMovieHolder(ComposeView(parent.context))
         } else {
             LoadHolder(inflater.inflate(R.layout.item_loadmore, parent, false))
         }
@@ -70,8 +80,8 @@ class MainAdapter(private val activity: Activity) :
         }
 
         if (getItemViewType(position) == TYPE_LINEAR) {
-            (holder as MovieViewHolder)
-            holder.bind(listMovie[position])
+            (holder as ComposeMovieHolder)
+            holder.bind(listMovie[position].toUi(), onItemClick)
         }
     }
 
@@ -85,25 +95,17 @@ class MainAdapter(private val activity: Activity) :
 
     override fun getItemCount() = listMovie.size
 
-    class MovieViewHolder internal constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        private val imgPhoto: ImageView = itemView.findViewById(R.id.ivPoster)
-        private val tvName: TextView = itemView.findViewById(R.id.tvTitle)
-        private val tvYear: TextView = itemView.findViewById(R.id.tvYear)
-        private val ll: LinearLayout = itemView.findViewById(R.id.ll)
+    private class ComposeMovieHolder(
+        private val composeView: ComposeView
+    ) : RecyclerView.ViewHolder(composeView) {
 
-
-        fun bind(movie: MdlMovieList) {
-            if (movie.Title != null) {
-                tvName.text = movie.Title
-                tvYear.text = movie.Year
-                GlideUtil.glideOverrideSize(itemView.context, movie.Poster!!, imgPhoto)
-
-                ll.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_IMDB, movie.imdbID)
-                    itemView.context.startActivity(intent)
-                }
+        fun bind(movie: MovieUi, onClick: (String) -> Unit) {
+            composeView.setContent {
+                // Wrap with your app theme so typography/colors match
+//                MovieAppTheme {
+//                    MovieRow(movie = movie, onClick = onClick)
+//                }
+                MovieRow(movie = movie, onClick = onClick)
             }
         }
     }

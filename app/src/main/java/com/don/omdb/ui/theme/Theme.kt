@@ -319,7 +319,7 @@ fun ContrastAwareReplyTheme(
 
     MaterialTheme(
         colorScheme = replyColorScheme,
-        typography = replyTypography,
+        typography = omdbTypography,
         shapes = shapes,
         content = content,
     )
