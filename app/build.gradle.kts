@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -44,6 +45,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
 
     packaging {
@@ -65,6 +67,13 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.tooling.preview)
+    debugImplementation(libs.androidx.compose.tooling)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.common.java8)
