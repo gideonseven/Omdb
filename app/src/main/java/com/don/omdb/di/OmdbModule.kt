@@ -1,9 +1,6 @@
 package com.don.omdb.di
 
-import android.app.Application
-import android.content.Context
-import com.chimerapps.niddler.core.AndroidNiddler
-import com.chimerapps.niddler.interceptor.okhttp.NiddlerOkHttpInterceptor
+import com.don.omdb.BuildConfig
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.RemoteRepository
@@ -13,12 +10,12 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -32,10 +29,22 @@ object OmdbModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(niddlerInterceptor: Interceptor): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(niddlerInterceptor) // real in debug, no-op in release
-            .build()
+    fun provideOkHttpClient(): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+
+        // Add logging interceptor for debug builds only
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+            builder.addInterceptor(loggingInterceptor)
+        }
+
+        return builder.build()
+    }
 
     @Provides
     @Singleton
