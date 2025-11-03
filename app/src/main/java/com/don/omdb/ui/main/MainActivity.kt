@@ -3,6 +3,7 @@ package com.don.omdb.ui.main
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -17,6 +18,7 @@ import com.don.omdb.R
 import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.databinding.ActivityMainBinding
 import com.don.omdb.ui.BaseActivity
+import com.don.omdb.ui.detail.DetailActivity
 import com.don.omdb.utils.OnLoadMoreListener
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -69,7 +71,12 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupAdapter() {
-        mAdapter = MainAdapter(this)
+        mAdapter = MainAdapter(this) { movieID ->
+            // navigate to detail as you already do
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_IMDB, movieID)
+            startActivity(intent)
+        }
         mAdapter.setLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
                 binding.rvMovieList.post {
@@ -123,7 +130,7 @@ class MainActivity : BaseActivity() {
     private fun resetState(query: String) {
         currentPage = 1
         myQuery = query
-        mAdapter.clearList()
+        mAdapter.clear()
     }
 
     private val getMovie = Observer<List<MdlMovieList>> { list ->
