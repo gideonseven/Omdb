@@ -62,6 +62,8 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
         return movieResults
     }
 
+
+    // old method
     override fun getDetails(
         movieService: MovieService,
         imdbID: String?,
@@ -81,6 +83,16 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
         }, movieService, imdbID, progress)
 
         return movieDetail
+    }
+
+    //compose version
+    fun getMovieDetail(
+        callback: RemoteRepository.LoadDetailCallback,
+        movieService: MovieService,
+        imdbID: String?,
+        onLoadingChange: ((Boolean) -> Unit)? = null
+    ) {
+        remoteRepository.getDetails(callback, movieService, imdbID, onLoadingChange)
     }
 
 
