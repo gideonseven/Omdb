@@ -1,10 +1,6 @@
 package com.don.omdb.ui.detail
 
-import android.annotation.SuppressLint
-import android.widget.LinearLayout
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.don.omdb.api.MovieService
 import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlDetail
@@ -14,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**

@@ -55,9 +55,3 @@ fun MovieRow(
         }
     }
 }
-
-//@Composable
-//@Preview
-//fun MovieRowPreview(){
-//    MovieRow()
-//}
