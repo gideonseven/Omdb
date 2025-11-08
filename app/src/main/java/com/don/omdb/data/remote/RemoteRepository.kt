@@ -72,6 +72,7 @@ class RemoteRepository {
             })
     }
 
+    //old version
     fun getDetails(
         callback: LoadDetailCallback,
         movieService: MovieService,
@@ -101,6 +102,49 @@ class RemoteRepository {
                     Timber.e(t, "Failed to get movies!")
 //                        errorResponse.postValue()
                     progress.visibility = View.GONE
+                    callback.onDataNotAvailable(t.message.toString())
+                }
+            })
+    }
+
+    //compose version
+    fun getDetails(
+        callback: LoadDetailCallback,
+        movieService: MovieService,
+        imdbID: String?,
+        onLoadingChange: ((Boolean) -> Unit)? = null
+    ) {
+        onLoadingChange?.invoke(true)
+
+        movieService.getDetailMovie(JniHelper.apiKey(), imdbID)
+            .enqueue(object : Callback<JsonObject> {
+                override fun onResponse(
+                    call: Call<JsonObject?>,
+                    response: Response<JsonObject?>
+                ) {
+                    onLoadingChange?.invoke(false)
+
+                    if (response.isSuccessful) {
+                        if (response.body() != null) {
+                            val jsonBody = response.body()!!.asJsonObject.toString()
+                            Timber.d(jsonBody)
+
+                            val jsonParser = JsonParser()
+                            val jo = jsonParser.parse(jsonBody) as JsonObject
+
+                            val detail = Gson().fromJson(jo, MdlDetail::class.java)
+                            callback.onDetailReceived(detail)
+                        }
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<JsonObject?>,
+                    t: Throwable
+                ) {
+                    Timber.e(t, "Failed to get Movie Details!")
+                    onLoadingChange?.invoke(false)
                     callback.onDataNotAvailable(t.message.toString())
                 }
             })

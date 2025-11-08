@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.tooling.preview)
+    implementation(libs.androidx.compose.activity)
     debugImplementation(libs.androidx.compose.tooling)
 
     // Lifecycle
@@ -91,7 +92,7 @@ dependencies {
     ksp(libs.glide.compiler)
 
     // Coil for Compose images
-    implementation("io.coil-kt:coil-compose:2.2.1")
+    implementation(libs.coil.compose)
 
     // Material Design
     implementation(libs.material)

@@ -3,6 +3,7 @@ package com.don.omdb.ui.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,16 @@ fun MovieRow(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(onClick = { onClick(movie.id) }, modifier = modifier.fillMaxWidth()) {
-        Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        onClick = { onClick(movie.id) },
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            Modifier
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             AsyncImage(
                 model = movie.posterUrl,
                 contentDescription = movie.title,
@@ -46,9 +55,3 @@ fun MovieRow(
         }
     }
 }
-
-//@Composable
-//@Preview
-//fun MovieRowPreview(){
-//    MovieRow()
-//}

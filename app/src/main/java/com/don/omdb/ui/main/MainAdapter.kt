@@ -1,5 +1,6 @@
 package com.don.omdb.ui.main
 
+import AppTheme
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
@@ -105,7 +106,9 @@ class MainAdapter(
 //                MovieAppTheme {
 //                    MovieRow(movie = movie, onClick = onClick)
 //                }
-                MovieRow(movie = movie, onClick = onClick)
+                AppTheme {
+                    MovieRow(movie = movie, onClick = onClick)
+                }
             }
         }
     }
