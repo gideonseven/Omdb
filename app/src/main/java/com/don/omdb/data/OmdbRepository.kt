@@ -1,11 +1,6 @@
 package com.don.omdb.data
 
-import android.widget.LinearLayout
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.don.omdb.api.MovieService
-import com.don.omdb.data.remote.MdlDetail
-import com.don.omdb.data.remote.MdlMovieList
 import com.don.omdb.data.remote.RemoteRepository
 
 
@@ -14,10 +9,7 @@ import com.don.omdb.data.remote.RemoteRepository
  * dunprek@gmail.com
  * Jakarta - Indonesia
  */
-class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataSource {
-
-
-    val errorResponse = MutableLiveData<String>()
+class OmdbRepository(private val remoteRepository: RemoteRepository) {
 
     companion object {
         @Volatile
@@ -35,54 +27,18 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
         }
     }
 
-    override fun getMovies(
+    // ========== New Compose-Friendly Methods ==========
+
+    /**
+     * Uses callbacks for direct state management in ViewModels
+     */
+    fun getMovies(
+        callback: RemoteRepository.LoadMoviesCallback,
         movieService: MovieService,
         page: Int,
-        keyword: String,
-        progress: LinearLayout
-    ): LiveData<List<MdlMovieList>> {
-        val movieResults = MutableLiveData<List<MdlMovieList>>()
-        remoteRepository.getMovies(
-            object : RemoteRepository.LoadMoviesCallback {
-                override fun onAllMoviesReceived(courseResponses: List<MdlMovieList>) {
-                    movieResults.postValue(courseResponses)
-                }
-
-                override fun onDataNotAvailable(response: String) {
-                    errorResponse.postValue(response)
-                }
-            },
-            movieService,
-            page,
-            keyword,
-            progress
-        )
-
-
-        return movieResults
-    }
-
-
-    // old method
-    override fun getDetails(
-        movieService: MovieService,
-        imdbID: String?,
-        progress: LinearLayout
-    ): LiveData<MdlDetail> {
-        val movieDetail = MutableLiveData<MdlDetail>()
-
-        remoteRepository.getDetails(object : RemoteRepository.LoadDetailCallback {
-            override fun onDetailReceived(mdlDetail: MdlDetail) {
-                movieDetail.postValue(mdlDetail)
-            }
-
-            override fun onDataNotAvailable(response: String) {
-                errorResponse.postValue(response)
-            }
-
-        }, movieService, imdbID, progress)
-
-        return movieDetail
+        keyword: String
+    ) {
+        remoteRepository.getMovies(callback, movieService, page, keyword)
     }
 
     //compose version
@@ -94,11 +50,4 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) : OmdbDataS
     ) {
         remoteRepository.getDetails(callback, movieService, imdbID, onLoadingChange)
     }
-
-
-    override fun getError(): LiveData<String> {
-        return errorResponse
-    }
-
-
 }

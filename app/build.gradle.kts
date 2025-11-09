@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.tooling.preview)
     implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.navigation)
     debugImplementation(libs.androidx.compose.tooling)
 
     // Lifecycle
@@ -83,6 +84,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation)
     ksp(libs.hilt.compiler)
 
     // Glide

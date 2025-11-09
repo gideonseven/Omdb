@@ -1,15 +1,14 @@
 package com.don.omdb.ui.detail
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.MaterialTheme
-import com.don.omdb.ui.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.getValue
 
 @AndroidEntryPoint
-class DetailActivity : BaseActivity() {
+class DetailActivity : ComponentActivity() {
     companion object {
         const val EXTRA_IMDB = "extra_imdb"
     }
