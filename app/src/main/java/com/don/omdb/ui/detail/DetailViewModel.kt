@@ -6,6 +6,7 @@ import com.don.omdb.data.OmdbRepository
 import com.don.omdb.data.remote.MdlDetail
 import com.don.omdb.data.remote.MovieDetailUi
 import com.don.omdb.data.remote.RemoteRepository
+import com.don.omdb.data.remote.toMovieDetailUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -61,13 +62,4 @@ class DetailViewModel @Inject constructor(
 data class DetailUiState(
     val isLoading: Boolean = false,
     val movieDetail: MovieDetailUi? = null
-)
-
-private fun MdlDetail.toMovieDetailUi() = MovieDetailUi(
-    id = imdbID ?: "",
-    title = title ?: "",
-    year = year ?: "",
-    posterUrl = poster ?: "",
-    rating = imdbRating,
-    description = plot
 )

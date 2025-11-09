@@ -1,6 +1,13 @@
 package com.don.omdb.ui.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,7 +30,7 @@ fun MovieRow(
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        onClick = { onClick(movie.id) },
+        onClick = { onClick(movie.imdbID) },
         modifier = modifier.fillMaxWidth()
     ) {
         Row(
@@ -32,8 +39,8 @@ fun MovieRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = movie.posterUrl,
-                contentDescription = movie.title,
+                model = movie.Poster,
+                contentDescription = movie.Title,
                 modifier = Modifier
                     .size(width = 72.dp, height = 100.dp)
                     .clip(RoundedCornerShape(8.dp))
@@ -41,14 +48,14 @@ fun MovieRow(
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(
-                    text = movie.title,
+                    text = movie.Title,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = movie.year,
+                    text = movie.Year,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

@@ -14,7 +14,7 @@ data class MovieDetailUi(
 )
 
 
-fun MdlDetail.toUi(): MovieDetailUi = MovieDetailUi(
+fun MdlDetail.toMovieDetailUi() = MovieDetailUi(
     id = imdbID ?: title ?: "", // adjust to your fields
     title = title ?: "-",
     year = year ?: "-",

@@ -8,6 +8,7 @@ targetSdk = "34"
 androidGradlePlugin = "8.7.3"
 kotlin = "2.0.21"
 hilt = "2.52"
+hilt-navigation ="1.1.0"
 ksp = "2.0.21-1.0.28"
 
 # Compose
@@ -56,6 +57,7 @@ androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose" }
+androidx-compose-navigation = {module = "androidx.navigation:navigation-compose"}
 
 # Lifecycle
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
@@ -65,6 +67,7 @@ androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-lived
 # Hilt
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-navigation = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation"}
 
 # Glide
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
