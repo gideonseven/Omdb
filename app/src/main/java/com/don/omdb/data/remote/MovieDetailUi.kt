@@ -15,7 +15,7 @@ data class MovieDetailUi(
 
 
 fun MdlDetail.toMovieDetailUi() = MovieDetailUi(
-    id = imdbID ?: title ?: "", // adjust to your fields
+    id = imdbID ?: title ?: "",
     title = title ?: "-",
     year = year ?: "-",
     posterUrl = poster ?: "-",

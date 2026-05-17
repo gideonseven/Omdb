@@ -27,7 +27,6 @@ class OmdbRepository(private val remoteRepository: RemoteRepository) {
         }
     }
 
-    // ========== New Compose-Friendly Methods ==========
 
     /**
      * Uses callbacks for direct state management in ViewModels

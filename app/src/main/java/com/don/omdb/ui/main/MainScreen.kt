@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -37,11 +39,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.don.omdb.R
 import com.don.omdb.data.remote.toUi
 import com.don.omdb.ui.components.MovieRow
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +108,8 @@ fun MainScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 // Search TextField
+                Timber.tag("isSearchActivity").d(isSearchActive.toString())
+
                 if (isSearchActive) {
                     SearchTextField(
                         searchText = searchText,
@@ -113,6 +119,7 @@ fun MainScreen(
                                 viewModel.searchMovies(query)
                                 isSearchActive = false
                             }
+                            Timber.tag("start_search").d(query)
                         },
                         onClearSearch = {
                             searchText = ""
@@ -215,6 +222,8 @@ fun SearchTextField(
             }
         },
         singleLine = true,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(onSearch = { onSearch(searchText) }),
         colors = OutlinedTextFieldDefaults.colors(),
         shape = MaterialTheme.shapes.medium
     )
