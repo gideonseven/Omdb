@@ -9,6 +9,7 @@ plugins {
 android {
     namespace = "com.don.omdb"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    ndkVersion = "27.2.12479018"  // r27b — first with 16KB alignment by default
 
     defaultConfig {
         applicationId = "com.don.omdb"
@@ -51,6 +52,9 @@ android {
     packaging {
         resources {
             pickFirsts += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        }
+        jniLibs {
+            useLegacyPackaging = false  // ensures proper alignment in APK
         }
     }
 
